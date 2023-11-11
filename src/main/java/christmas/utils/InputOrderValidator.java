@@ -11,8 +11,8 @@ public class InputOrderValidator {
     private static final String ORDER = "주문";
     // 정규식 패턴: (문자열 한글)-(숫자 1 이상) or (문자열 한글)-(숫자 1 이상),(문자열 한글)-(숫자 1 이상)
     //([1-9]|1[0-9]|20))*";
-    private static final String regex = "(([가-힣]+)-([1-9]+[0-9]*)){1}((:?,)([가-힣]+)-([1-9]+[0-9]*))*";
-    private static final Pattern pattern = Pattern.compile(regex);
+    private static final String INPUT_FORMAT_REGEX = "(([가-힣]+)-([1-9]+[0-9]*)){1}((:?,)([가-힣]+)-([1-9]+[0-9]*))*";
+    private static final Pattern PATTERN = Pattern.compile(INPUT_FORMAT_REGEX);
 
     private InputOrderValidator() {
     }
@@ -36,7 +36,7 @@ public class InputOrderValidator {
     }
 
     private static void validateOrderFormat(String inputOrder) {
-        Matcher matcher = pattern.matcher(inputOrder);
+        Matcher matcher = PATTERN.matcher(inputOrder);
         if (!matcher.matches()) {
             throw new InvalidDataException(INVALID_DATA.getFormatMessage(ORDER));
         }

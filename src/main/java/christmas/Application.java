@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.domain.Orders;
 import christmas.domain.ReservationDate;
 import christmas.utils.Parser;
 import christmas.view.InputView;
@@ -31,6 +32,9 @@ public class Application {
         String readOrder = InputView.readOrders();
         System.out.println("readOrder = " + readOrder);
 
+        // 주문 저장
+        Orders orders = new Orders(readOrder);
+        // 주문 중복 및 확인
 
     }
 }
