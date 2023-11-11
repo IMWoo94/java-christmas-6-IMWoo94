@@ -3,7 +3,7 @@ package christmas.utils;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.exception.InvalidDateException;
+import christmas.exception.InvalidDataException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class InputDateValidatorTest {
     @MethodSource("errorInputDate")
     void inputDateExceptionTest(String inputDate) {
         assertThatThrownBy(() -> InputDateValidator.validateInputDate(inputDate))
-                .isInstanceOf(InvalidDateException.class)
+                .isInstanceOf(InvalidDataException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("%s %s", ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }
@@ -47,7 +47,7 @@ class InputDateValidatorTest {
     void validateNullTest() {
         String inputDate = null;
         assertThatThrownBy(() -> InputDateValidator.validateInputDate(inputDate))
-                .isInstanceOf(InvalidDateException.class)
+                .isInstanceOf(InvalidDataException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }

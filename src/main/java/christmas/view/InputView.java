@@ -2,6 +2,7 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.utils.InputDateValidator;
+import christmas.utils.InputOrderValidator;
 
 public class InputView {
     private InputView() {
@@ -16,6 +17,7 @@ public class InputView {
 
     public static String readOrders() {
         String order = Console.readLine();
+        InputOrderValidator.validateInputOrder(order);
         return order;
     }
 }

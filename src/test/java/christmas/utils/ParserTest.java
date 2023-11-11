@@ -3,7 +3,7 @@ package christmas.utils;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.exception.InvalidDateException;
+import christmas.exception.InvalidDataException;
 import java.time.LocalDate;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +39,7 @@ class ParserTest {
     @ValueSource(strings = {"asd", " ", "", "z1", "33"})
     void parserFailTest(String data) {
         assertThatThrownBy(() -> Parser.StringToLocalDate(data))
-                .isInstanceOf(InvalidDateException.class)
+                .isInstanceOf(InvalidDataException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }

@@ -3,7 +3,7 @@ package christmas.utils;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.exception.InvalidDateException;
+import christmas.exception.InvalidDataException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class InputOrderValidatorTest {
 
     @ParameterizedTest
     @DisplayName("[정상] 예약 일자 입력 값에 대한 유효성 검사")
-    @ValueSource(strings = {"12", "29", "31"})
+    @ValueSource(strings = {"양송이수프-1,타파스-2,티본스테이크-1", "초코케이크-1,제로콜라-3,레드와인-1", "바비큐립-1,해산물파스타-3"})
     void inputOrderSuccessTest(String inputOrder) {
         assertThatNoException().isThrownBy(() -> InputOrderValidator.validateInputOrder(inputOrder));
     }
@@ -27,8 +27,9 @@ class InputOrderValidatorTest {
     @DisplayName("[예외] 주문 내역 입력 값에 대한 유효성 검사 : 공백, 빈 값, \" \"")
     @MethodSource("errorInputOrder")
     void inputOrderExceptionTest(String inputOrder) {
+        System.out.println("inputOrder = " + inputOrder);
         assertThatThrownBy(() -> InputOrderValidator.validateInputOrder(inputOrder))
-                .isInstanceOf(InvalidDateException.class)
+                .isInstanceOf(InvalidDataException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("%s %s", ERROR_PREFIX, ERROR_ORDER_MESSAGE);
     }
@@ -36,7 +37,11 @@ class InputOrderValidatorTest {
     static Stream<Arguments> errorInputOrder() {
         return Stream.of(
                 Arguments.of(""),
-                Arguments.of(" ")
+                Arguments.of(" "),
+                Arguments.of("양송이수프-3,타파스-04"),
+                Arguments.of("양송이수프-3,아이스크림-1,"),
+                Arguments.of("양송이수프-3,,"),
+                Arguments.of("양송이수프-3 ,스테이크-4")
         );
     }
 
@@ -45,7 +50,7 @@ class InputOrderValidatorTest {
     void validateNullTest() {
         String inputOrder = null;
         assertThatThrownBy(() -> InputOrderValidator.validateInputOrder(inputOrder))
-                .isInstanceOf(InvalidDateException.class)
+                .isInstanceOf(InvalidDataException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_PREFIX, ERROR_ORDER_MESSAGE);
     }
