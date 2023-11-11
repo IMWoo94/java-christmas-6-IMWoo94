@@ -1,18 +1,19 @@
 package christmas.constants;
 
+import java.time.LocalDate;
+
 public enum EventDate {
-    YEAR(2023),
-    MONTH(12),
-    DAY(1),
+    START_DATE(1),
+    END_DATE(31),
     CHRISMAS(25);
 
-    private final int value;
+    private final LocalDate date;
 
-    EventDate(int value) {
-        this.value = value;
+    EventDate(int date) {
+        this.date = LocalDate.of(2023, 12, date);
     }
 
-    public int getValue() {
-        return value;
+    public LocalDate getDate() {
+        return date;
     }
 }
