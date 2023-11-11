@@ -15,19 +15,35 @@ import org.junit.jupiter.params.provider.MethodSource;
 class CalendarTest {
 
     @ParameterizedTest
-    @DisplayName("[정상] 예약 일자 저장 기능 테스트")
-    @MethodSource("initData")
-    void inputDateSuccessTest(LocalDate date, DayOfWeek otherDayOfWeek) {
+    @DisplayName("[정상] 예약 일자 저장 요일 정보 등록 기능 테스트")
+    @MethodSource("dayOfWeekCompareData")
+    void dayOfWeekCompareTest(LocalDate date, DayOfWeek otherDayOfWeek) {
         Calendar reservationDate = new Calendar(date);
         assertThat(reservationDate).isNotNull();
-        assertThat(reservationDate.checkDayOfWeek(otherDayOfWeek)).isTrue();
+        assertThat(reservationDate.compareDayOfWeek(otherDayOfWeek)).isTrue();
     }
 
-    static Stream<Arguments> initData() {
+    static Stream<Arguments> dayOfWeekCompareData() {
         return Stream.of(
                 Arguments.of(LocalDate.of(YEAR.getValue(), MONTH.getValue(), 12), DayOfWeek.TUESDAY),
                 Arguments.of(LocalDate.of(YEAR.getValue(), MONTH.getValue(), 23), DayOfWeek.SATURDAY),
                 Arguments.of(LocalDate.of(YEAR.getValue(), MONTH.getValue(), 31), DayOfWeek.SUNDAY)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("[정상] 예약 일자 주말 - 평일 확인 기능 테스트")
+    @MethodSource("holyDayCheckData")
+    void holyDayCheckTest(LocalDate date, boolean result) {
+        Calendar reservationDate = new Calendar(date);
+        assertThat(reservationDate.isHoliday()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> holyDayCheckData() {
+        return Stream.of(
+                Arguments.of(LocalDate.of(YEAR.getValue(), MONTH.getValue(), 12), false),
+                Arguments.of(LocalDate.of(YEAR.getValue(), MONTH.getValue(), 23), true),
+                Arguments.of(LocalDate.of(YEAR.getValue(), MONTH.getValue(), 31), true)
         );
     }
 

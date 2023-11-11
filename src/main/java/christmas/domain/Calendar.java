@@ -12,8 +12,12 @@ public class Calendar {
         this.dayOfWeek = reservationDate.getDayOfWeek();
     }
 
-    public boolean checkDayOfWeek(DayOfWeek otherDayOfweek) {
+    public boolean compareDayOfWeek(DayOfWeek otherDayOfweek) {
         return this.dayOfWeek.equals(otherDayOfweek);
+    }
+
+    public boolean isHoliday() {
+        return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
     }
 
 
