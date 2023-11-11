@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class InputDateValidatorTest {
+class InputDateValidatorTest {
 
     private static final String ERROR_PREFIX = "[ERROR]";
     private static final String ERROR_DATE_MESSAGE = "유효하지 않은 날짜입니다. 다시 입력해 주세요.";
@@ -25,7 +25,7 @@ public class InputDateValidatorTest {
     }
 
     @ParameterizedTest
-    @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사")
+    @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 공백, 빈 값, \" \"")
     @MethodSource("errorInputDate")
     void inputDateExceptionTest(String inputDate) {
         assertThatThrownBy(() -> InputDateValidator.validateInputDate(inputDate))
