@@ -45,15 +45,16 @@ public class InputValidatorTest {
     @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 빈 값, \" \" 공백 입력")
     @ValueSource(strings = {"", " "})
     void validateEmptyTest(String inputDate) {
-        assertThatThrownBy(() -> assertThat(inputDate.isEmpty()).isFalse())
+        assertThatThrownBy(() -> InputValidator.validateEmpty(inputDate))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }
 
     @Test
     @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : null 입력")
-    void validateNullTest(String inputDate) {
-        assertThatThrownBy(() -> assertThat(inputDate == null).isFalse())
+    void validateNullTest() {
+        String inputDate = null;
+        assertThatThrownBy(() -> InputValidator.validateNull(inputDate))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }

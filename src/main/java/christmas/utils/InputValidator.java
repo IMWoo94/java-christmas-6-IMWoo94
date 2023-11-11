@@ -10,9 +10,21 @@ public class InputValidator {
     private InputValidator() {
     }
 
-    public static void validateNumberType(String inputData) {
+    public static void validateNull(String inputDate) {
+        if (inputDate == null) {
+            throw new InputException(INVALID_DATE.getMessage());
+        }
+    }
+
+    public static void validateEmpty(String inputDate) {
+        if (inputDate.isBlank()) {
+            throw new InputException(INVALID_DATE.getMessage());
+        }
+    }
+
+    public static void validateNumberType(String inputDate) {
         try {
-            NumberFormat.getIntegerInstance().parse(inputData);
+            NumberFormat.getIntegerInstance().parse(inputDate);
         } catch (ParseException e) {
             throw new InputException(INVALID_DATE.getMessage(), e);
         }
