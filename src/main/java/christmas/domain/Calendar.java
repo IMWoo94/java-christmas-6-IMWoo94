@@ -8,6 +8,7 @@ import static java.time.DayOfWeek.SUNDAY;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Arrays;
 
 public class Calendar {
@@ -34,8 +35,21 @@ public class Calendar {
     }
 
     public boolean canEventPeriod() {
-        return (reservationDate.isAfter(START_DATE.getMinusDays(ONE_DAY))
-                && reservationDate.isBefore(END_DATE.getPlusDays(ONE_DAY)));
+        return hasBetweenPeriod(START_DATE.getMinusDays(ONE_DAY), END_DATE.getPlusDays(ONE_DAY));
+    }
+
+    public int getEventAccumulateDays() {
+        int days = 0;
+        if (hasBetweenPeriod(START_DATE.getMinusDays(ONE_DAY), CHRISTMAST.getPlusDays(ONE_DAY))) {
+            Period period = Period.between(START_DATE.getDate(), reservationDate);
+            return period.getDays();
+        }
+        return days;
+    }
+
+    private boolean hasBetweenPeriod(LocalDate beginDate, LocalDate endDate) {
+        return reservationDate.isAfter(beginDate)
+                && reservationDate.isBefore(endDate);
     }
 
     public boolean isChristmastDate() {

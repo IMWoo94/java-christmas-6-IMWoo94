@@ -67,7 +67,7 @@ class CalendarTest {
     }
 
     @ParameterizedTest
-    @DisplayName("[정상] 예약 일자 특별 할인 대상일 확인 기능 테스트")
+    @DisplayName("[정상] 예약 일자 이벤트 기간 확인 기능 테스트")
     @MethodSource("eventDiscountDate")
     void checkEventPeriodTest(LocalDate date, boolean result) {
         Calendar reservationDate = new Calendar(date);
@@ -84,6 +84,23 @@ class CalendarTest {
     }
 
     @ParameterizedTest
+    @DisplayName("[정상] 크리스마스 이벤트 누적 일수 확인 기능 테스트")
+    @MethodSource("eventAccumulateData")
+    void getEventAccumulateDaysTest(LocalDate date, int accumulateDays) {
+        Calendar reservationDate = new Calendar(date);
+        int christmasEventAccumulateDays = reservationDate.getEventAccumulateDays();
+        assertThat(christmasEventAccumulateDays).isEqualTo(accumulateDays);
+    }
+
+    static Stream<Arguments> eventAccumulateData() {
+        return Stream.of(
+                Arguments.of(LocalDate.of(YEAR, MONTH, 31), 0),
+                Arguments.of(LocalDate.of(YEAR, MONTH, 24), 23),
+                Arguments.of(EventDate.CHRISTMAST.getDate(), 24)
+        );
+    }
+
+    @ParameterizedTest
     @DisplayName("[정상] 예약 일자 크리스마스 당일 확인 기능 테스트")
     @MethodSource("christmastDate")
     void checkChristmasDateTest(LocalDate date, boolean result) {
@@ -93,9 +110,9 @@ class CalendarTest {
 
     static Stream<Arguments> christmastDate() {
         return Stream.of(
-                Arguments.of(LocalDate.of(YEAR, MONTH, 31), false),
-                Arguments.of(LocalDate.of(YEAR, MONTH, 24), false),
-                Arguments.of(EventDate.CHRISTMAST.getDate(), true)
+                Arguments.of(LocalDate.of(YEAR, MONTH, 31), false, 1),
+                Arguments.of(LocalDate.of(YEAR, MONTH - 2, 24), false, 2),
+                Arguments.of(EventDate.CHRISTMAST.getDate(), true, 3)
         );
     }
 
