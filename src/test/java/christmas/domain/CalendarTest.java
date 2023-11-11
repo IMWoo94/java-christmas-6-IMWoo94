@@ -62,7 +62,7 @@ class CalendarTest {
         return Stream.of(
                 Arguments.of(LocalDate.of(YEAR, MONTH, 12), false),
                 Arguments.of(LocalDate.of(YEAR, MONTH, 24), true),
-                Arguments.of(EventDate.CHRISMAS.getDate(), true)
+                Arguments.of(EventDate.CHRISTMAST.getDate(), true)
         );
     }
 
@@ -78,14 +78,28 @@ class CalendarTest {
         return Stream.of(
                 Arguments.of(LocalDate.of(YEAR, MONTH, 1), true),
                 Arguments.of(LocalDate.of(YEAR, MONTH, 31), true),
-                Arguments.of(EventDate.CHRISMAS.getDate(), true),
+                Arguments.of(EventDate.CHRISTMAST.getDate(), true),
                 Arguments.of(LocalDate.of(YEAR, MONTH - 1, 11), false)
         );
     }
 
+    @ParameterizedTest
+    @DisplayName("[정상] 예약 일자 크리스마스 당일 확인 기능 테스트")
+    @MethodSource("christmastDate")
+    void checkChristmasDateTest(LocalDate date, boolean result) {
+        Calendar reservationDate = new Calendar(date);
+        assertThat(reservationDate.isChristmastDate()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> christmastDate() {
+        return Stream.of(
+                Arguments.of(LocalDate.of(YEAR, MONTH, 31), false),
+                Arguments.of(LocalDate.of(YEAR, MONTH, 24), false),
+                Arguments.of(EventDate.CHRISTMAST.getDate(), true)
+        );
+    }
+
     /**
-     * - [ ] 예약 일자 저장 기능
-     *     - [ ] 이벤트 기간 확인 기능
      *     - [ ] 크리스마스 이전 확인 기능
      *     - [ ] 크리스마스 당일 확인 기능
      */
