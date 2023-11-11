@@ -24,7 +24,7 @@ class InputOrderValidatorTest {
     }
 
     @ParameterizedTest
-    @DisplayName("[예외] 주문 내역 입력 값에 대한 유효성 검사 : 공백, 빈 값, \" \"")
+    @DisplayName("[예외] 주문 내역 입력 값에 대한 유효성 검사 : 공백, 빈 값, \" \", 입력 포맷 불일치")
     @MethodSource("errorInputOrder")
     void inputOrderExceptionTest(String inputOrder) {
         System.out.println("inputOrder = " + inputOrder);
