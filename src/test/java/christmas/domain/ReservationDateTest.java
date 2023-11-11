@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class CalendarTest {
+class ReservationDateTest {
 
     private static final int YEAR = 2023;
     private static final int MONTH = 12;
@@ -21,7 +21,7 @@ class CalendarTest {
     @DisplayName("[정상] 예약 일자 저장 요일 정보 등록 기능 테스트")
     @MethodSource("dayOfWeekCompareData")
     void checkDayOfWeekCompareTest(LocalDate date, DayOfWeek otherDayOfWeek) {
-        Calendar reservationDate = new Calendar(date);
+        ReservationDate reservationDate = new ReservationDate(date);
         assertThat(reservationDate).isNotNull();
         assertThat(reservationDate.compareDayOfWeek(otherDayOfWeek)).isTrue();
     }
@@ -38,7 +38,7 @@ class CalendarTest {
     @DisplayName("[정상] 예약 일자 주말 - 평일 확인 기능 테스트")
     @MethodSource("holyDayCheckData")
     void checkHolyDayTest(LocalDate date, boolean result) {
-        Calendar reservationDate = new Calendar(date);
+        ReservationDate reservationDate = new ReservationDate(date);
         assertThat(reservationDate.isHoliday()).isEqualTo(result);
     }
 
@@ -54,7 +54,7 @@ class CalendarTest {
     @DisplayName("[정상] 예약 일자 특별 할인 대상일 확인 기능 테스트")
     @MethodSource("specialDiscountDate")
     void checkSpecialDiscountDateTest(LocalDate date, boolean result) {
-        Calendar reservationDate = new Calendar(date);
+        ReservationDate reservationDate = new ReservationDate(date);
         assertThat(reservationDate.isSpecialDiscountDate()).isEqualTo(result);
     }
 
@@ -70,7 +70,7 @@ class CalendarTest {
     @DisplayName("[정상] 예약 일자 이벤트 기간 확인 기능 테스트")
     @MethodSource("eventDiscountDate")
     void checkEventPeriodTest(LocalDate date, boolean result) {
-        Calendar reservationDate = new Calendar(date);
+        ReservationDate reservationDate = new ReservationDate(date);
         assertThat(reservationDate.canEventPeriod()).isEqualTo(result);
     }
 
@@ -87,7 +87,7 @@ class CalendarTest {
     @DisplayName("[정상] 크리스마스 이벤트 누적 일수 확인 기능 테스트")
     @MethodSource("eventAccumulateData")
     void getEventAccumulateDaysTest(LocalDate date, int accumulateDays) {
-        Calendar reservationDate = new Calendar(date);
+        ReservationDate reservationDate = new ReservationDate(date);
         int christmasEventAccumulateDays = reservationDate.getEventAccumulateDays();
         assertThat(christmasEventAccumulateDays).isEqualTo(accumulateDays);
     }
@@ -104,7 +104,7 @@ class CalendarTest {
     @DisplayName("[정상] 예약 일자 크리스마스 당일 확인 기능 테스트")
     @MethodSource("christmastDate")
     void checkChristmasDateTest(LocalDate date, boolean result) {
-        Calendar reservationDate = new Calendar(date);
+        ReservationDate reservationDate = new ReservationDate(date);
         assertThat(reservationDate.isChristmastDate()).isEqualTo(result);
     }
 
@@ -115,10 +115,4 @@ class CalendarTest {
                 Arguments.of(EventDate.CHRISTMAST.getDate(), true, 3)
         );
     }
-
-    /**
-     *     - [ ] 크리스마스 이전 확인 기능
-     *     - [ ] 크리스마스 당일 확인 기능
-     */
-
 }

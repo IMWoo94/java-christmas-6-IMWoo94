@@ -11,12 +11,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Arrays;
 
-public class Calendar {
+public class ReservationDate {
     private final LocalDate reservationDate;
     private final DayOfWeek dayOfWeek;
     private final int ONE_DAY = 1;
 
-    public Calendar(LocalDate reservationDate) {
+    public ReservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
         this.dayOfWeek = reservationDate.getDayOfWeek();
     }

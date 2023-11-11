@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.domain.ReservationDate;
 import christmas.utils.Parser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -13,12 +14,15 @@ public class Application {
         OutputView.printRequestReservationDate();
 
         // 예약 일자 입력 기능
-        String reservationDate = InputView.readReservationDate();
-        System.out.println("reservationDate = " + reservationDate);
+        String readDate = InputView.readReservationDate();
+        System.out.println("reservationDate = " + readDate);
 
         // 예약 일자 입력 값 숫자 타입으로 변환 기능
-        LocalDate localDate = Parser.StringToLocalDate(reservationDate);
+        LocalDate localDate = Parser.StringToLocalDate(readDate);
         System.out.println("localDate = " + localDate);
+
+        // 예약 일자 저장 기능
+        ReservationDate reservationDate = new ReservationDate(localDate);
 
     }
 }
