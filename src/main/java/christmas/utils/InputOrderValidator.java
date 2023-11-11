@@ -9,8 +9,9 @@ import java.util.regex.Pattern;
 public class InputOrderValidator {
 
     private static final String ORDER = "주문";
-    // 정규식 패턴: (문자열 한글)-(숫자 1 ~ 20) or (문자열 한글)-(숫자 1 ~ 20),(문자열 한글)-(숫자 1 ~ 20)
-    private static final String regex = "(([가-힣]+)-([1-9]|1[0-9]|20)){1}((:?,)([가-힣]+)-([1-9]|1[0-9]|20))*";
+    // 정규식 패턴: (문자열 한글)-(숫자 1 이상) or (문자열 한글)-(숫자 1 이상),(문자열 한글)-(숫자 1 이상)
+    //([1-9]|1[0-9]|20))*";
+    private static final String regex = "(([가-힣]+)-([1-9]+[0-9]*)){1}((:?,)([가-힣]+)-([1-9]+[0-9]*))*";
     private static final Pattern pattern = Pattern.compile(regex);
 
     private InputOrderValidator() {

@@ -24,7 +24,7 @@ class InputOrderValidatorTest {
     }
 
     @ParameterizedTest
-    @DisplayName("[예외] 주문 내역 입력 값에 대한 유효성 검사 : 공백, 빈 값, \" \", 입력 포맷 불일치")
+    @DisplayName("[예외] 주문 내역 입력 값에 대한 유효성 검사 : 공백, 빈 값, \" \", 입력 포맷 불일치, 1 이상 이외의 값 입력")
     @MethodSource("errorInputOrder")
     void inputOrderExceptionTest(String inputOrder) {
         System.out.println("inputOrder = " + inputOrder);
@@ -41,7 +41,8 @@ class InputOrderValidatorTest {
                 Arguments.of("양송이수프-3,타파스-04"),
                 Arguments.of("양송이수프-3,아이스크림-1,"),
                 Arguments.of("양송이수프-3,,"),
-                Arguments.of("양송이수프-3 ,스테이크-4")
+                Arguments.of("양송이수프-3 ,스테이크-4"),
+                Arguments.of("양송이수프-a,스테이크-4")
         );
     }
 
