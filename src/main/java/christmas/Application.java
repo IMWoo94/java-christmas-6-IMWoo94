@@ -27,5 +27,10 @@ public class Application {
         // 주문 요청 안내 멘트 출력 기능
         OutputView.printRequestOrders();
 
+        // 주문 입력 기능
+        String readOrder = InputView.readOrders();
+        System.out.println("readOrder = " + readOrder);
+
+
     }
 }

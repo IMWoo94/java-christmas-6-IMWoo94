@@ -13,4 +13,9 @@ public class InputView {
         InputDateValidator.validateInputDate(date);
         return date;
     }
+
+    public static String readOrders() {
+        String order = Console.readLine();
+        return order;
+    }
 }
