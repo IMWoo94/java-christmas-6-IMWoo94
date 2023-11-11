@@ -24,5 +24,8 @@ public class Application {
         // 예약 일자 저장 기능
         ReservationDate reservationDate = new ReservationDate(localDate);
 
+        // 주문 요청 안내 멘트 출력 기능
+        OutputView.printRequestOrders();
+
     }
 }
