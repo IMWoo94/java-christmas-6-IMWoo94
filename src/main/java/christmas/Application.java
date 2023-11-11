@@ -1,7 +1,9 @@
 package christmas;
 
+import christmas.utils.Parser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.time.LocalDate;
 
 public class Application {
     public static void main(String[] args) {
@@ -13,6 +15,10 @@ public class Application {
         // 예약 일자 입력 기능
         String reservationDate = InputView.readReservationDate();
         System.out.println("reservationDate = " + reservationDate);
-        
+
+        // 예약 일자 입력 값 숫자 타입으로 변환 기능
+        LocalDate localDate = Parser.StringToLocalDate(reservationDate);
+        System.out.println("localDate = " + localDate);
+
     }
 }

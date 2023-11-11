@@ -42,18 +42,6 @@ class InputDateValidatorTest {
         );
     }
 
-    // 날짜 정보 입력 시 검증
-//    @ParameterizedTest
-//    @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 1 ~ 31 사이의 숫자가 아닌 경우")
-//    @ValueSource(ints = {0, 32})
-//    void validateBetweenRangeTest(int day) {
-//        assertThatThrownBy(() -> assertThat(day).isBetween(1, 31))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
-//
-//    }
-
-
     @Test
     @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : null 입력")
     void validateNullTest() {
