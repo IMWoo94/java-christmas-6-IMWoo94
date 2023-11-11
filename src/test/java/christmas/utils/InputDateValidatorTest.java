@@ -1,16 +1,15 @@
 package christmas.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
-import christmas.exception.InputException;
+import christmas.exception.InputDateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class InputValidatorTest {
+public class InputDateValidatorTest {
 
     private static final String ERROR_PREFIX = "[ERROR]";
     private static final String ERROR_DATE_MESSAGE = "유효하지 않은 날짜입니다. 다시 입력해 주세요.";
@@ -25,27 +24,29 @@ public class InputValidatorTest {
     @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 숫자 타입이 아닌 경우")
     void validateNumberTypeTest() {
         String inputDate = "noNumberType";
-        assertThatThrownBy(() -> InputValidator.validateNumberType(inputDate))
-                .isInstanceOf(InputException.class)
+        assertThatThrownBy(() -> InputDateValidator.validateNumberType(inputDate))
+                .isInstanceOf(InputDateException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("%s %s", ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }
 
-    @ParameterizedTest
-    @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 1 ~ 31 사이의 숫자가 아닌 경우")
-    @ValueSource(ints = {0, 32})
-    void validateBetweenRangeTest(int day) {
-        assertThatThrownBy(() -> assertThat(day).isBetween(1, 31))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
-
-    }
+    // 날짜 정보 입력 시 검증
+//    @ParameterizedTest
+//    @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 1 ~ 31 사이의 숫자가 아닌 경우")
+//    @ValueSource(ints = {0, 32})
+//    void validateBetweenRangeTest(int day) {
+//        assertThatThrownBy(() -> assertThat(day).isBetween(1, 31))
+//                .isInstanceOf(IllegalArgumentException.class)
+//                .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
+//
+//    }
 
     @ParameterizedTest
     @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 빈 값, \" \" 공백 입력")
     @ValueSource(strings = {"", " "})
     void validateEmptyTest(String inputDate) {
-        assertThatThrownBy(() -> InputValidator.validateEmpty(inputDate))
+        assertThatThrownBy(() -> InputDateValidator.validateEmpty(inputDate))
+                .isInstanceOf(InputDateException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }
@@ -54,7 +55,8 @@ public class InputValidatorTest {
     @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : null 입력")
     void validateNullTest() {
         String inputDate = null;
-        assertThatThrownBy(() -> InputValidator.validateNull(inputDate))
+        assertThatThrownBy(() -> InputDateValidator.validateNull(inputDate))
+                .isInstanceOf(InputDateException.class)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }

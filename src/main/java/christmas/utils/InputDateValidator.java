@@ -2,23 +2,23 @@ package christmas.utils;
 
 import static christmas.constants.ErrorMessage.INVALID_DATE;
 
-import christmas.exception.InputException;
+import christmas.exception.InputDateException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-public class InputValidator {
-    private InputValidator() {
+public class InputDateValidator {
+    private InputDateValidator() {
     }
 
     public static void validateNull(String inputDate) {
         if (inputDate == null) {
-            throw new InputException(INVALID_DATE.getMessage());
+            throw new InputDateException(INVALID_DATE.getMessage());
         }
     }
 
     public static void validateEmpty(String inputDate) {
         if (inputDate.isBlank()) {
-            throw new InputException(INVALID_DATE.getMessage());
+            throw new InputDateException(INVALID_DATE.getMessage());
         }
     }
 
@@ -26,7 +26,7 @@ public class InputValidator {
         try {
             NumberFormat.getIntegerInstance().parse(inputDate);
         } catch (ParseException e) {
-            throw new InputException(INVALID_DATE.getMessage(), e);
+            throw new InputDateException(INVALID_DATE.getMessage(), e);
         }
     }
 }
