@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
+import christmas.exception.InputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,9 +25,10 @@ public class InputValidatorTest {
     @DisplayName("[예외] 예약 일자 입력 값에 대한 유효성 검사 : 숫자 타입이 아닌 경우")
     void validateNumberTypeTest() {
         String inputDate = "noNumberType";
-        assertThatThrownBy(() -> Integer.parseInt(inputDate))
+        assertThatThrownBy(() -> InputValidator.validateNumberType(inputDate))
+                .isInstanceOf(InputException.class)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_PREFIX, ERROR_DATE_MESSAGE);
+                .hasMessageContaining("%s %s", ERROR_PREFIX, ERROR_DATE_MESSAGE);
     }
 
     @ParameterizedTest
