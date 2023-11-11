@@ -13,5 +13,6 @@ public class Application {
         // 예약 일자 입력 기능
         String reservationDate = InputView.readReservationDate();
         System.out.println("reservationDate = " + reservationDate);
+        
     }
 }

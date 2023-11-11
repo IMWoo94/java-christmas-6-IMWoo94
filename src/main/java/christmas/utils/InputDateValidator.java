@@ -10,19 +10,25 @@ public class InputDateValidator {
     private InputDateValidator() {
     }
 
-    public static void validateNull(String inputDate) {
+    public static void validateInputDate(String inputDate) {
+        validateNull(inputDate);
+        validateEmpty(inputDate);
+        validateNumberType(inputDate);
+    }
+
+    private static void validateNull(String inputDate) {
         if (inputDate == null) {
             throw new InputDateException(INVALID_DATE.getMessage());
         }
     }
 
-    public static void validateEmpty(String inputDate) {
+    private static void validateEmpty(String inputDate) {
         if (inputDate.isBlank()) {
             throw new InputDateException(INVALID_DATE.getMessage());
         }
     }
 
-    public static void validateNumberType(String inputDate) {
+    private static void validateNumberType(String inputDate) {
         try {
             NumberFormat.getIntegerInstance().parse(inputDate);
         } catch (ParseException e) {
