@@ -1,0 +1,31 @@
+# Format of the commit message
+# 제목을 아랫줄에 작성, 제목 끝에 마침표 금지, 무엇을 했는지 명확하게 작성
+# scope : 어디가 바뀌었는지 선언 함수가 변경되면 함수 이름이나, 메소드 추가 시 해당 클래스 이름
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+
+################
+# 본문(추가 설명)을 아랫줄에 작성
+# 명령문, 현재 시제로 작성하며, 변경 이유와 변경 전과의 차이점 설명
+
+################
+# 꼬릿말(footer)을 아랫줄에 작성 (관련된 이슈 번호 등 추가)
+
+################
+# feat : 기능 추가
+# fix : 버그 수정
+# docs(guide) : 문서 수정
+# test : 테스트 코드 추가
+# refactor : 코드 리팩토링
+# style : 코드 의미에 영향을 주지 않는 변경사항
+# cicd : CI/CD 관련 설정
+# build : 빌드 관련 파일 수정
+# perf : 성능 개선
+# chore : 그 외 자잘한 수정
+
+################
+# commit message format apply commend
+# git config —global commit.template [파일경로]
