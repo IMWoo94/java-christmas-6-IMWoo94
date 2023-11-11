@@ -1,6 +1,10 @@
 package christmas.domain;
 
 import static christmas.constants.EventDate.CHRISMAS;
+import static christmas.constants.EventDate.END_DATE;
+import static christmas.constants.EventDate.START_DATE;
+import static java.time.DayOfWeek.SATURDAY;
+import static java.time.DayOfWeek.SUNDAY;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -16,21 +20,26 @@ public class Calendar {
     }
 
     public boolean compareDayOfWeek(DayOfWeek otherDayOfweek) {
-        return this.dayOfWeek.equals(otherDayOfweek);
+        return dayOfWeek.equals(otherDayOfweek);
     }
 
     public boolean isHoliday() {
-        return hasDayOfWeekContains(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+        return hasDayOfWeekContains(SATURDAY, SUNDAY);
     }
 
     public boolean isSpecialDiscountDate() {
-        return hasDayOfWeekContains(DayOfWeek.SUNDAY) || reservationDate.equals(CHRISMAS.getDate());
+        return (hasDayOfWeekContains(SUNDAY)
+                || reservationDate.equals(CHRISMAS.getDate()));
+    }
+
+    public boolean canEventPeriod() {
+        return (reservationDate.isAfter(START_DATE.getMinusDays(1))
+                && reservationDate.isBefore(END_DATE.getPlusDays(1)));
     }
 
     private boolean hasDayOfWeekContains(DayOfWeek... otherDayOfWeek) {
         return Arrays.stream(otherDayOfWeek)
                 .anyMatch(this::compareDayOfWeek);
     }
-
 
 }

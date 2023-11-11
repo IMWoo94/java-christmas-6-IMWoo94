@@ -20,7 +20,7 @@ class CalendarTest {
     @ParameterizedTest
     @DisplayName("[정상] 예약 일자 저장 요일 정보 등록 기능 테스트")
     @MethodSource("dayOfWeekCompareData")
-    void dayOfWeekCompareTest(LocalDate date, DayOfWeek otherDayOfWeek) {
+    void checkDayOfWeekCompareTest(LocalDate date, DayOfWeek otherDayOfWeek) {
         Calendar reservationDate = new Calendar(date);
         assertThat(reservationDate).isNotNull();
         assertThat(reservationDate.compareDayOfWeek(otherDayOfWeek)).isTrue();
@@ -37,7 +37,7 @@ class CalendarTest {
     @ParameterizedTest
     @DisplayName("[정상] 예약 일자 주말 - 평일 확인 기능 테스트")
     @MethodSource("holyDayCheckData")
-    void holyDayCheckTest(LocalDate date, boolean result) {
+    void checkHolyDayTest(LocalDate date, boolean result) {
         Calendar reservationDate = new Calendar(date);
         assertThat(reservationDate.isHoliday()).isEqualTo(result);
     }
@@ -53,7 +53,7 @@ class CalendarTest {
     @ParameterizedTest
     @DisplayName("[정상] 예약 일자 특별 할인 대상일 확인 기능 테스트")
     @MethodSource("specialDiscountDate")
-    void specialDiscountDateCheckTest(LocalDate date, boolean result) {
+    void checkSpecialDiscountDateTest(LocalDate date, boolean result) {
         Calendar reservationDate = new Calendar(date);
         assertThat(reservationDate.isSpecialDiscountDate()).isEqualTo(result);
     }
@@ -66,9 +66,25 @@ class CalendarTest {
         );
     }
 
+    @ParameterizedTest
+    @DisplayName("[정상] 예약 일자 특별 할인 대상일 확인 기능 테스트")
+    @MethodSource("eventDiscountDate")
+    void checkEventPeriodTest(LocalDate date, boolean result) {
+        Calendar reservationDate = new Calendar(date);
+        assertThat(reservationDate.canEventPeriod()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> eventDiscountDate() {
+        return Stream.of(
+                Arguments.of(LocalDate.of(YEAR, MONTH, 1), true),
+                Arguments.of(LocalDate.of(YEAR, MONTH, 31), true),
+                Arguments.of(EventDate.CHRISMAS.getDate(), true),
+                Arguments.of(LocalDate.of(YEAR, MONTH - 1, 11), false)
+        );
+    }
+
     /**
      * - [ ] 예약 일자 저장 기능
-     *     - [ ] 특별 할인 대상일 확인 기능
      *     - [ ] 이벤트 기간 확인 기능
      *     - [ ] 크리스마스 이전 확인 기능
      *     - [ ] 크리스마스 당일 확인 기능
