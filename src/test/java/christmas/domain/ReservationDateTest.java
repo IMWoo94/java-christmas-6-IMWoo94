@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import static christmas.constants.GlobalConstant.MONTH;
+import static christmas.constants.GlobalConstant.YEAR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.constants.EventDate;
@@ -12,10 +14,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ReservationDateTest {
-
-    private static final int YEAR = 2023;
-    private static final int MONTH = 12;
-
 
     @ParameterizedTest
     @DisplayName("[정상] 예약 일자 저장 요일 정보 등록 기능 테스트")

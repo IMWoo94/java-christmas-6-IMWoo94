@@ -1,20 +1,18 @@
 package christmas.domain;
 
 import static christmas.constants.EventDate.CHRISTMAST;
-import static christmas.constants.EventDate.END_DATE;
 import static christmas.constants.EventDate.START_DATE;
 import static java.time.DayOfWeek.SATURDAY;
 import static java.time.DayOfWeek.SUNDAY;
 
+import christmas.constants.EventDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Arrays;
 
 public class ReservationDate {
     private final LocalDate reservationDate;
     private final DayOfWeek dayOfWeek;
-    private final int ONE_DAY = 1;
 
     public ReservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
@@ -35,25 +33,19 @@ public class ReservationDate {
     }
 
     public boolean canEventPeriod() {
-        return hasBetweenPeriod(START_DATE.getMinusDays(ONE_DAY), END_DATE.getPlusDays(ONE_DAY));
+        return EventDate.canEventPeriod(reservationDate);
     }
 
     public int getEventAccumulateDays() {
         int days = 0;
-        if (hasBetweenPeriod(START_DATE.getMinusDays(ONE_DAY), CHRISTMAST.getPlusDays(ONE_DAY))) {
-            Period period = Period.between(START_DATE.getDate(), reservationDate);
-            return period.getDays();
+        if (EventDate.canChristmastPeriod(reservationDate)) {
+            return START_DATE.getAccumulateDays(reservationDate);
         }
         return days;
     }
 
-    private boolean hasBetweenPeriod(LocalDate beginDate, LocalDate endDate) {
-        return reservationDate.isAfter(beginDate)
-                && reservationDate.isBefore(endDate);
-    }
-
     public boolean isChristmastDate() {
-        return reservationDate.isEqual(CHRISTMAST.getDate());
+        return CHRISTMAST.dateEquals(reservationDate);
     }
 
     private boolean hasDayOfWeekContains(DayOfWeek... otherDayOfWeek) {
