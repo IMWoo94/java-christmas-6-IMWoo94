@@ -7,29 +7,48 @@ import christmas.constants.ErrorMessage;
 import christmas.constants.MenuType;
 import christmas.constants.VariousMenu;
 import christmas.exception.InvalidDataException;
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Orders {
     private final String ORDER_REGEX = "([^,]+)-(\\d+)";
     private final EnumMap<VariousMenu, Integer> orderMenu = new EnumMap<>(VariousMenu.class);
-    private final EnumMap<MenuType, Integer> orderByMenu = new EnumMap<>(MenuType.class);
+    private final EnumMap<MenuType, Integer> orderQuantityByMenuType = new EnumMap<>(MenuType.class);
     private final String orders;
 
     public Orders(String readOrder) {
         // 해산물파스타-2,레드와인-1,초코케이크-10 의 형식의 데이터
         orders = readOrder;
         saveOrderMenu();
-        checkOrderMenu();
+        quantitySurveyByMenuType();
     }
 
-    public int calculateTotalOrderAmount() {
+    public int getCalculateTotalOrderAmount() {
         // 주문 총 금액 계산
         return orderMenu.entrySet()
                 .stream()
-                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
+                .mapToInt(menus -> menus.getKey().getPrice() * menus.getValue())
                 .sum();
+    }
+
+    public int getQuantityByMenuType(MenuType type) {
+        return orderQuantityByMenuType.get(type);
+    }
+
+    private void quantitySurveyByMenuType() {
+        Arrays.stream(MenuType.values())
+                .parallel()
+                .forEach(type -> {
+                    int quantity = orderMenu.entrySet()
+                            .parallelStream()
+                            .filter(entry -> entry.getKey().getType().equals(type))
+                            .mapToInt(Entry::getValue)
+                            .sum();
+                    orderQuantityByMenuType.put(type, quantity);
+                });
     }
 
     private void saveOrderMenu() {
@@ -44,6 +63,7 @@ public class Orders {
             validateDuplicateMenu(menuName);
             orderMenu.put(menuName, quantity);
         }
+        checkOrderMenu();
     }
 
     private VariousMenu getVariousMenu(String foodName) {
@@ -88,7 +108,8 @@ public class Orders {
     @Override
     public String toString() {
         return "Orders{" +
-                "orderMenu=" + orderMenu +
+                ", orderMenu=" + orderMenu +
+                ", orderQuantityByMenuType=" + orderQuantityByMenuType +
                 ", orders='" + orders + '\'' +
                 '}';
     }

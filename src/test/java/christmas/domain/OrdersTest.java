@@ -3,6 +3,7 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import christmas.constants.MenuType;
 import christmas.exception.InvalidDataException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -35,13 +36,29 @@ class OrdersTest {
     @MethodSource("calculateTotalOrderAmountData")
     void calculateTotalOrderAmountSuccess(String readOrder, int totalAmount) {
         Orders orders = new Orders(readOrder);
-        assertThat(orders.calculateTotalOrderAmount()).isEqualTo(totalAmount);
+        assertThat(orders.getCalculateTotalOrderAmount()).isEqualTo(totalAmount);
     }
 
     static Stream<Arguments> calculateTotalOrderAmountData() {
         return Stream.of(
                 Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", 305_000),
                 Arguments.of("바비큐립-2,티본스테이크-4", 328_000)
+        );
+    }
+
+    // 메뉴 타입별 주문 수량 계산 기능
+    @ParameterizedTest
+    @DisplayName("[정상] 메뉴 타입별 주문 수량 계산 테스트")
+    @MethodSource("quantityByMenuTypeData")
+    void getQuantityByMenuTypeTest(String readOrder, MenuType type, int quantity) {
+        Orders orders = new Orders(readOrder);
+        assertThat(orders.getQuantityByMenuType(type)).isEqualTo(quantity);
+    }
+
+    static Stream<Arguments> quantityByMenuTypeData() {
+        return Stream.of(
+                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", MenuType.DESSERT, 10),
+                Arguments.of("바비큐립-2,티본스테이크-4", MenuType.MAIN, 6)
         );
     }
 
