@@ -8,6 +8,7 @@ import christmas.utils.Parser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.time.LocalDate;
+import java.util.Map;
 
 public class RestaurantController {
 
@@ -39,9 +40,10 @@ public class RestaurantController {
     }
 
     private void discountCalculate() {
-        discount = new Discount(order);
+        discount = new Discount(order, reservationDate);
 
-
+        Map<String, Integer> benefitDiscounts = discount.getBenefitDiscounts();
+        System.out.println("benefitDiscounts = " + benefitDiscounts);
     }
 
     private Orders askOrder() {
