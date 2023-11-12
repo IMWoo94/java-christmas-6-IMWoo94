@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import static christmas.constants.PreviewType.BENEFIT_DETAILS;
+import static christmas.constants.PreviewType.ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT;
 import static christmas.constants.PreviewType.GIVEAWAY_MENU;
 import static christmas.constants.PreviewType.ORDER_MENU;
 import static christmas.constants.PreviewType.TOTAL_BENEFIT_AMOUNT;
@@ -83,6 +84,7 @@ public class RestaurantController {
         giveawayPreview();
         eventBenefitPreview();
         totalBenefitAmountPreview();
+        totalAmountAfterDiscountPreview();
     }
 
     private void orderMenuPreview() {
@@ -135,16 +137,22 @@ public class RestaurantController {
 
     private void totalBenefitAmountPreview() {
         String form = previewTypeComment(TOTAL_BENEFIT_AMOUNT);
-        /**
-         * <총혜택 금액>
-         * 0원
-         * <총혜택 금액>
-         * -31,246원
-         */
+
         int benefitAmount = discount.getTotalBenefitAmount();
         OutputView.printBenefitPreview(form, -benefitAmount);
+    }
 
-
+    private void totalAmountAfterDiscountPreview() {
+        //    - [ ] 할인 후 예상 결제 금액 출력 기능
+        /**
+         *<할인 후 예상 결제 금액>
+         * 8,500원
+         * <할인 후 예상 결제 금액>
+         * 135,754원
+         */
+        String form = previewTypeComment(ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT);
+        int payment = order.getCalculateTotalOrderAmount() - discount.getTotalBenefitAmount();
+        OutputView.printBenefitPreview(form, payment);
     }
 
     private String previewTypeComment(PreviewType previewType) {
