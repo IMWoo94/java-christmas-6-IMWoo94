@@ -39,11 +39,15 @@ public enum EventDate {
     }
 
     public static boolean canEventPeriod(LocalDate date) {
-        return hasBetweenPeriod(date, START_DATE.getMinusDays(1), END_DATE.getPlusDays(1));
+        return hasBetweenPeriod(date,
+                START_DATE.getMinusDays(1),
+                END_DATE.getPlusDays(1));
     }
 
     public static boolean canChristmastPeriod(LocalDate date) {
-        return hasBetweenPeriod(date, START_DATE.getMinusDays(1), CHRISTMAST.getPlusDays(1));
+        return hasBetweenPeriod(date,
+                START_DATE.getMinusDays(1),
+                CHRISTMAST.getPlusDays(1));
     }
 
 

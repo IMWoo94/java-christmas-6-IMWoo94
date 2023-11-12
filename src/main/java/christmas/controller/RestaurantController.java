@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.Discount;
 import christmas.domain.Orders;
 import christmas.domain.ReservationDate;
 import christmas.exception.InvalidDataException;
@@ -12,6 +13,7 @@ public class RestaurantController {
 
     private ReservationDate reservationDate;
     private Orders order;
+    private Discount discount;
 
     public RestaurantController() {
         openInit();
@@ -30,10 +32,10 @@ public class RestaurantController {
         order = askOrder();
 
         // 주문 내역 출력
-        orderHistoyPrint();
+        orderHistoryPrint();
     }
 
-    private void orderHistoyPrint() {
+    private void orderHistoryPrint() {
         order.getOrderMenu()
                 .forEach(OutputView::printOrderMenu);
     }
