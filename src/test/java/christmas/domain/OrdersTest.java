@@ -51,5 +51,4 @@ class OrdersTest {
                 Arguments.of("제로콜라-10,레드와인-9,샴페인-1")
         );
     }
-
 }
