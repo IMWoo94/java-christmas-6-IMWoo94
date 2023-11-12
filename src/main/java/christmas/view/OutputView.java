@@ -25,4 +25,8 @@ public class OutputView {
         System.out.println(String.format("%s %s개", menuName, count));
     }
 
+    public static void printExceptionMessage(String messge) {
+        System.out.println(messge);
+    }
+
 }
