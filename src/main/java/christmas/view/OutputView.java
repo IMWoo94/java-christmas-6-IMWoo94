@@ -36,8 +36,8 @@ public class OutputView {
         System.out.println(type.getType());
     }
 
-    public static void printBenefitPreview(String format) {
-        System.out.println(format);
+    public static void printBenefitPreview(String format, Object... args) {
+        System.out.println(String.format(format, args));
     }
 
     public static void printNonBenefitPreview() {

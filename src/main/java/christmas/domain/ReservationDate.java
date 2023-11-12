@@ -14,6 +14,7 @@ import christmas.constants.EventDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class ReservationDate {
     private final LocalDate reservationDate;
@@ -52,12 +53,11 @@ public class ReservationDate {
         return EventDate.canEventPeriod(reservationDate);
     }
 
-    public int getEventAccumulateDays() {
-        int days = -1;
+    public Optional<Integer> getEventAccumulateDays() {
         if (EventDate.canChristmastPeriod(reservationDate)) {
-            return START_DATE.getAccumulateDays(reservationDate);
+            return Optional.of(START_DATE.getAccumulateDays(reservationDate));
         }
-        return days;
+        return Optional.empty();
     }
 
     public boolean isChristmastDate() {

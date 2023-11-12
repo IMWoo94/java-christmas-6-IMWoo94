@@ -3,6 +3,7 @@ package christmas.controller;
 import static christmas.constants.PreviewType.BENEFIT_DETAILS;
 import static christmas.constants.PreviewType.GIVEAWAY_MENU;
 import static christmas.constants.PreviewType.ORDER_MENU;
+import static christmas.constants.PreviewType.TOTAL_BENEFIT_AMOUNT;
 import static christmas.constants.PreviewType.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT;
 
 import christmas.constants.EventPolicy;
@@ -78,9 +79,10 @@ public class RestaurantController {
 
     private void eventPreviews() {
         orderMenuPreview();
-        totalAmounBeforeDiscountPreview();
+        totalAmountBeforeDiscountPreview();
         giveawayPreview();
         eventBenefitPreview();
+        totalBenefitAmountPreview();
     }
 
     private void orderMenuPreview() {
@@ -89,16 +91,16 @@ public class RestaurantController {
         Map<String, String> orderMenu = order.getOrderMenu();
 
         orderMenu.forEach(
-                (menu, quantity) -> OutputView.printBenefitPreview(String.format(form, menu, quantity))
+                (menu, quantity) -> OutputView.printBenefitPreview(form, menu, quantity)
         );
     }
 
-    private void totalAmounBeforeDiscountPreview() {
+    private void totalAmountBeforeDiscountPreview() {
         String form = previewTypeComment(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT);
 
         int orderPrice = order.getCalculateTotalOrderAmount();
 
-        OutputView.printBenefitPreview(String.format(form, orderPrice));
+        OutputView.printBenefitPreview(form, orderPrice);
     }
 
     private void giveawayPreview() {
@@ -109,7 +111,7 @@ public class RestaurantController {
             for (VariousMenu gift : gifts) {
                 int quantity = gift.getQuantity();
                 String giftMenuName = gift.getMenuName();
-                OutputView.printBenefitPreview(String.format(form, giftMenuName, quantity));
+                OutputView.printBenefitPreview(form, giftMenuName, quantity);
             }
             return;
         }
@@ -117,17 +119,6 @@ public class RestaurantController {
     }
 
     private void eventBenefitPreview() {
-
-        //    - [ ] 헤택 내역 출력 기능
-        /**
-         * <혜택 내역>
-         * 없음
-         * <혜택 내역>
-         * 크리스마스 디데이 할인: -1,200원
-         * 평일 할인: -4,046원
-         * 특별 할인: -1,000원
-         * 증정 이벤트: -25,000원
-         */
         String form = previewTypeComment(BENEFIT_DETAILS);
         Map<String, Integer> benefitDiscounts = discount.getBenefitDiscounts();
         if (benefitDiscounts.isEmpty()) {
@@ -137,9 +128,23 @@ public class RestaurantController {
 
         benefitDiscounts.forEach(
                 (eventPolicy, benefitDiscount) -> OutputView.printBenefitPreview(
-                        String.format(form, eventPolicy, -benefitDiscount)
+                        form, eventPolicy, -benefitDiscount
                 )
         );
+    }
+
+    private void totalBenefitAmountPreview() {
+        String form = previewTypeComment(TOTAL_BENEFIT_AMOUNT);
+        /**
+         * <총혜택 금액>
+         * 0원
+         * <총혜택 금액>
+         * -31,246원
+         */
+        int benefitAmount = discount.getTotalBenefitAmount();
+        OutputView.printBenefitPreview(form, -benefitAmount);
+
+
     }
 
     private String previewTypeComment(PreviewType previewType) {

@@ -13,6 +13,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Discount {
 
@@ -74,9 +75,9 @@ public class Discount {
 
     //    - [ ] 크리스마스 디데이 할인 금액 계산 기능 : 크리스마스 디데이 다가올수록 할인 금액 100원 씩 증가
     private void christmasDDayDiscountApply() {
-        int days = reservationDate.getEventAccumulateDays();
-        if (days >= 0) {
-            int discountAmount = CHRISTMAS_D_DAY_DISCOUNT.getDiscountAmount(days);
+        Optional<Integer> days = reservationDate.getEventAccumulateDays();
+        if (days.isPresent()) {
+            int discountAmount = CHRISTMAS_D_DAY_DISCOUNT.getDiscountAmount(days.get());
 
             eventDiscount.put(CHRISTMAS_D_DAY_DISCOUNT, discountAmount);
         }
@@ -102,6 +103,13 @@ public class Discount {
                 (eventPolicy, discount) -> benefitDiscounts.put(eventPolicy.getEventName(), discount)
         );
         return benefitDiscounts;
+    }
+
+    public int getTotalBenefitAmount() {
+        return eventDiscount.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
 }
