@@ -24,16 +24,12 @@ public class Orders {
         checkOrderMenu();
     }
 
-    public void ordersCalculateAmount() {
-        calculateOrderAmountByMenu();
-        calculateTotalOrderAmount();
-    }
-
-    private void calculateOrderAmountByMenu() {
-    }
-
-    private void calculateTotalOrderAmount() {
-
+    public int calculateTotalOrderAmount() {
+        // 주문 총 금액 계산
+        return orderMenu.entrySet()
+                .stream()
+                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
     }
 
     private void saveOrderMenu() {

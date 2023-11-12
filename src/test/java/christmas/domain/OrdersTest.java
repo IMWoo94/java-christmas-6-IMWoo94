@@ -25,8 +25,23 @@ class OrdersTest {
 
     static Stream<Arguments> successOrderData() {
         return Stream.of(
-                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", "해산물파스타-1,레드와인-2,초코케이크-10"),
-                Arguments.of("바비큐립-2,티본스테이크-4", "바비큐립-2,티본스테이크-4")
+                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", "해산물파스타-1,레드와인-2,초코케이크-10", 305000),
+                Arguments.of("바비큐립-2,티본스테이크-4", "바비큐립-2,티본스테이크-4", 328000)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("[정상] 주문 입력 후 주문 전체 금액 테스트")
+    @MethodSource("calculateTotalOrderAmountData")
+    void calculateTotalOrderAmountSuccess(String readOrder, int totalAmount) {
+        Orders orders = new Orders(readOrder);
+        assertThat(orders.calculateTotalOrderAmount()).isEqualTo(totalAmount);
+    }
+
+    static Stream<Arguments> calculateTotalOrderAmountData() {
+        return Stream.of(
+                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", 305_000),
+                Arguments.of("바비큐립-2,티본스테이크-4", 328_000)
         );
     }
 
@@ -51,4 +66,6 @@ class OrdersTest {
                 Arguments.of("제로콜라-10,레드와인-9,샴페인-1")
         );
     }
+
+
 }
