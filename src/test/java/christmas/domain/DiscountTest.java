@@ -3,17 +3,25 @@ package christmas.domain;
 import static christmas.constants.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
 import static christmas.constants.EventPolicy.GIVEAWAY_EVENT;
 import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.constants.EventPolicy;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DiscountTest {
+
+    @ParameterizedTest
+    @DisplayName("[정상] 이벤트 참가 대상 확인 테스트")
+    @CsvSource(value = {"10_000:true", "2_000:false"}, delimiter = ':')
+    void checkParticipationConditions(int amount, boolean result) {
+        assertThat(EventPolicy.checkParticipationConditions(amount)).isEqualTo(result);
+    }
 
     //    - [ ] 평일 이벤트 할인 금액 계산 기능 : 디저트 메뉴 당 2,023 할인
     @ParameterizedTest
@@ -27,7 +35,7 @@ class DiscountTest {
 
         Map<String, Integer> eventDiscount = discount.getBenefitDiscounts();
         int applyAmount = eventDiscount.get(EventPolicy.WEEKDAY_DISCOUNT.getEventName());
-        Assertions.assertThat(applyAmount).isEqualTo(benefitAmount);
+        assertThat(applyAmount).isEqualTo(benefitAmount);
     }
 
     static Stream<Arguments> weekdayDiscountData() {
@@ -49,7 +57,7 @@ class DiscountTest {
 
         Map<String, Integer> eventDiscount = discount.getBenefitDiscounts();
         int applyAmount = eventDiscount.get(EventPolicy.WEEKEND_DISCOUNT.getEventName());
-        Assertions.assertThat(applyAmount).isEqualTo(benefitAmount);
+        assertThat(applyAmount).isEqualTo(benefitAmount);
     }
 
     static Stream<Arguments> weekendDiscountData() {
@@ -71,7 +79,7 @@ class DiscountTest {
 
         Map<String, Integer> eventDiscount = discount.getBenefitDiscounts();
         int applyAmount = eventDiscount.get(SPECIAL_DISCOUNT.getEventName());
-        Assertions.assertThat(applyAmount).isEqualTo(benefitAmount);
+        assertThat(applyAmount).isEqualTo(benefitAmount);
     }
 
     static Stream<Arguments> specialDiscountData() {
@@ -93,7 +101,7 @@ class DiscountTest {
 
         Map<String, Integer> eventDiscount = discount.getBenefitDiscounts();
         int applyAmount = eventDiscount.get(CHRISTMAS_D_DAY_DISCOUNT.getEventName());
-        Assertions.assertThat(applyAmount).isEqualTo(benefitAmount);
+        assertThat(applyAmount).isEqualTo(benefitAmount);
     }
 
     static Stream<Arguments> christmasDDayDiscountData() {
@@ -115,7 +123,7 @@ class DiscountTest {
 
         Map<String, Integer> eventDiscount = discount.getBenefitDiscounts();
         int applyAmount = eventDiscount.get(GIVEAWAY_EVENT.getEventName());
-        Assertions.assertThat(applyAmount).isEqualTo(benefitAmount);
+        assertThat(applyAmount).isEqualTo(benefitAmount);
     }
 
     static Stream<Arguments> giveawayEventData() {

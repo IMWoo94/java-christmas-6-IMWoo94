@@ -4,8 +4,7 @@ import static christmas.constants.VariousMenu.CHAMPAGNE;
 
 public enum EventPolicy {
 
-
-    CHRISTMAS_D_DAY_DISCOUNT(1_000, "크리스마스 디데 할인"),
+    CHRISTMAS_D_DAY_DISCOUNT(1_000, "크리스마스 디데이 할인"),
     WEEKDAY_DISCOUNT(2_023, "평일 할인"),
     WEEKEND_DISCOUNT(2_023, "주말 할인"),
     SPECIAL_DISCOUNT(1_000, "특별 할인"),
@@ -36,5 +35,9 @@ public enum EventPolicy {
             return discount + 100 * count;
         }
         return discount * count;
+    }
+
+    public static boolean checkParticipationConditions(int amount) {
+        return amount >= 10_000;
     }
 }

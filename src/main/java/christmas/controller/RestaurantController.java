@@ -33,11 +33,15 @@ public class RestaurantController {
 
         // 주문 내역 출력
         orderHistoryPrint();
+
+        // 할인 계산
+        discountCalculate();
     }
 
-    private void orderHistoryPrint() {
-        order.getOrderMenu()
-                .forEach(OutputView::printOrderMenu);
+    private void discountCalculate() {
+        discount = new Discount(order);
+
+
     }
 
     private Orders askOrder() {
@@ -68,5 +72,10 @@ public class RestaurantController {
             OutputView.printExceptionMessage(e.getMessage());
             return askReservationDate();
         }
+    }
+
+    private void orderHistoryPrint() {
+        order.getOrderMenu()
+                .forEach(OutputView::printOrderMenu);
     }
 }

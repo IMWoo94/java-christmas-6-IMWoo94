@@ -21,7 +21,10 @@ public class Discount {
         this.orders = orders;
     }
 
-    // 총 주문 금액 10,000원 이상 부터 이벤트 적용
+    // 이벤트 참여 확인 기능
+    public boolean availabilityOfBenefits() {
+        return EventPolicy.checkParticipationConditions(orders.getCalculateTotalOrderAmount());
+    }
 
     //    - [ ] 평일 이벤트 할인 금액 계산 기능 : 디저트 메뉴 당 2,023 할인
     public void weekdayDiscountApply() {
