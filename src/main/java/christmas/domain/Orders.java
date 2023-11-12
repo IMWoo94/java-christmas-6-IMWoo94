@@ -3,7 +3,6 @@ package christmas.domain;
 import static christmas.constants.GlobalConstant.ORDER;
 import static christmas.constants.MenuType.BEVERAGE;
 
-import christmas.constants.ErrorMessage;
 import christmas.constants.MenuType;
 import christmas.constants.VariousMenu;
 import christmas.exception.InvalidDataException;
@@ -17,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class Orders {
     private final String ORDER_REGEX = "([^,]+)-(\\d+)";
+    private final int limitQuantity = 20;
     private final EnumMap<VariousMenu, Integer> orderMenu = new EnumMap<>(VariousMenu.class);
     private final EnumMap<MenuType, Integer> orderQuantityByMenuType = new EnumMap<>(MenuType.class);
     private final String orders;
@@ -33,7 +33,7 @@ public class Orders {
         orderMenu.forEach(
                 (key, value) -> menus.put(key.getMenuName(), String.valueOf(value))
         );
-        
+
         return menus;
     }
 
@@ -85,7 +85,7 @@ public class Orders {
     private void validateDuplicateMenu(VariousMenu menuName) {
         if (orderMenu.containsKey(menuName)) {
             // 중복 입력에 대한 예외 발생 처리
-            throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage(ORDER.getValue()));
+            throw InvalidDataException.from(ORDER.getValue());
         }
     }
 
@@ -99,9 +99,9 @@ public class Orders {
                 .stream()
                 .mapToInt(Integer::intValue).sum();
 
-        if (totalMenuQuantity > 20) {
+        if (totalMenuQuantity > limitQuantity) {
             // 주문 메뉴 수량 20개 초과 시 예외 발생
-            throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage(ORDER.getValue()));
+            throw InvalidDataException.from(ORDER.getValue());
         }
     }
 
@@ -112,7 +112,7 @@ public class Orders {
 
         if (result) {
             // 음료만 주문 시 예외 발생
-            throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage(ORDER.getValue()));
+            throw InvalidDataException.from(ORDER.getValue());
         }
     }
 
