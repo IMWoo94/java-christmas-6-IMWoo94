@@ -1,5 +1,8 @@
 package christmas.domain;
 
+import static christmas.constants.GlobalConstant.BEVERAGE;
+import static christmas.constants.GlobalConstant.ORDER;
+
 import christmas.constants.ErrorMessage;
 import christmas.constants.VariousMenu;
 import christmas.exception.InvalidDataException;
@@ -44,7 +47,7 @@ public class Orders {
     private void validateDuplicateMenu(VariousMenu menuName) {
         if (orderMenu.containsKey(menuName)) {
             // 중복 입력에 대한 예외 발생 처리
-            throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage("주문"));
+            throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage(ORDER.getValue()));
         }
     }
 
@@ -56,19 +59,19 @@ public class Orders {
     private void validateMenuQuantityOver() {
         if (totalMenuQuantity > 20) {
             // 주문 메뉴 수량 20개 초과 시 예외 발생
-            throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage("주문"));
+            throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage(ORDER.getValue()));
         }
     }
 
     private void validateOrderOnlyBeverage() {
         for (Entry<VariousMenu, Integer> variousMenus : orderMenu.entrySet()) {
             VariousMenu menu = variousMenus.getKey();
-            if (!menu.getType().equals("음료")) {
+            if (!menu.getType().equals(BEVERAGE.getValue())) {
                 return;
             }
         }
-        // 음료만 주문 시 예외 발생
-        throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage("주문"));
+        // 음료만 주문 시 예외 발능
+        throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage(ORDER.getValue()));
     }
 
     @Override

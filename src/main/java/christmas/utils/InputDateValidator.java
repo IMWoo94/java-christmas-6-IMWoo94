@@ -1,14 +1,13 @@
 package christmas.utils;
 
 import static christmas.constants.ErrorMessage.INVALID_DATA;
+import static christmas.constants.GlobalConstant.DATE;
 
 import christmas.exception.InvalidDataException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
 public class InputDateValidator {
-
-    private static final String DATE = "날짜";
 
     private InputDateValidator() {
     }
@@ -21,13 +20,13 @@ public class InputDateValidator {
 
     private static void validateNull(String inputDate) {
         if (inputDate == null) {
-            throw new InvalidDataException(INVALID_DATA.getFormatMessage(DATE));
+            throw new InvalidDataException(INVALID_DATA.getFormatMessage(DATE.getValue()));
         }
     }
 
     private static void validateEmpty(String inputDate) {
         if (inputDate.isBlank()) {
-            throw new InvalidDataException(INVALID_DATA.getFormatMessage(DATE));
+            throw new InvalidDataException(INVALID_DATA.getFormatMessage(DATE.getValue()));
         }
     }
 
@@ -35,7 +34,7 @@ public class InputDateValidator {
         try {
             NumberFormat.getIntegerInstance().parse(inputDate);
         } catch (ParseException e) {
-            throw new InvalidDataException(INVALID_DATA.getFormatMessage(DATE), e);
+            throw new InvalidDataException(INVALID_DATA.getFormatMessage(DATE.getValue()), e);
         }
     }
 }

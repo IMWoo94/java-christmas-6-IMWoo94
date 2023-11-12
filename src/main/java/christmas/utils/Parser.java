@@ -1,6 +1,7 @@
 package christmas.utils;
 
 import static christmas.constants.ErrorMessage.INVALID_DATA;
+import static christmas.constants.GlobalConstant.DATE;
 
 import christmas.exception.InvalidDataException;
 import java.text.NumberFormat;
@@ -17,7 +18,7 @@ public class Parser {
             Number parse = NumberFormat.getIntegerInstance().parse(data);
             return LocalDate.of(2023, 12, parse.intValue());
         } catch (ParseException | DateTimeException e) {
-            throw new InvalidDataException(INVALID_DATA.getFormatMessage("날짜"), e);
+            throw new InvalidDataException(INVALID_DATA.getFormatMessage(DATE.getValue()), e);
         }
     }
 }
