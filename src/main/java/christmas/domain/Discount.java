@@ -99,7 +99,7 @@ public class Discount {
     public Map<String, Integer> getBenefitDiscounts() {
         Map<String, Integer> benefitDiscounts = new HashMap<>();
         eventDiscount.forEach(
-                (key, value) -> benefitDiscounts.put(key.getEventName(), value)
+                (eventPolicy, discount) -> benefitDiscounts.put(eventPolicy.getEventName(), discount)
         );
         return benefitDiscounts;
     }

@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import static christmas.constants.PreviewType.BENEFIT_DETAILS;
 import static christmas.constants.PreviewType.GIVEAWAY_MENU;
 import static christmas.constants.PreviewType.ORDER_MENU;
 import static christmas.constants.PreviewType.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT;
@@ -79,27 +80,7 @@ public class RestaurantController {
         orderMenuPreview();
         totalAmounBeforeDiscountPreview();
         giveawayPreview();
-    }
-
-    private void giveawayPreview() {
-        /**
-         * <증정 메뉴>
-         * 없음
-         *<증정 메뉴>
-         * 샴페인 1개
-         */
-        String form = previewTypeComment(GIVEAWAY_MENU);
-        List<VariousMenu> gifts = VariousMenu.getGifts();
-        int price = order.getCalculateTotalOrderAmount();
-        if (EventPolicy.checkGiveawayEventConditions(price)) {
-            for (VariousMenu gift : gifts) {
-                int quantity = gift.getQuantity();
-                String giftMenuName = gift.getMenuName();
-                OutputView.printBenefitPreview(String.format(form, giftMenuName, quantity));
-            }
-            return;
-        }
-        OutputView.printNonBenefitPreview();
+        eventBenefitPreview();
     }
 
     private void orderMenuPreview() {
@@ -118,6 +99,47 @@ public class RestaurantController {
         int orderPrice = order.getCalculateTotalOrderAmount();
 
         OutputView.printBenefitPreview(String.format(form, orderPrice));
+    }
+
+    private void giveawayPreview() {
+        String form = previewTypeComment(GIVEAWAY_MENU);
+        List<VariousMenu> gifts = VariousMenu.getGifts();
+        int price = order.getCalculateTotalOrderAmount();
+        if (EventPolicy.checkGiveawayEventConditions(price)) {
+            for (VariousMenu gift : gifts) {
+                int quantity = gift.getQuantity();
+                String giftMenuName = gift.getMenuName();
+                OutputView.printBenefitPreview(String.format(form, giftMenuName, quantity));
+            }
+            return;
+        }
+        OutputView.printNonBenefitPreview();
+    }
+
+    private void eventBenefitPreview() {
+
+        //    - [ ] 헤택 내역 출력 기능
+        /**
+         * <혜택 내역>
+         * 없음
+         * <혜택 내역>
+         * 크리스마스 디데이 할인: -1,200원
+         * 평일 할인: -4,046원
+         * 특별 할인: -1,000원
+         * 증정 이벤트: -25,000원
+         */
+        String form = previewTypeComment(BENEFIT_DETAILS);
+        Map<String, Integer> benefitDiscounts = discount.getBenefitDiscounts();
+        if (benefitDiscounts.isEmpty()) {
+            OutputView.printNonBenefitPreview();
+            return;
+        }
+
+        benefitDiscounts.forEach(
+                (eventPolicy, benefitDiscount) -> OutputView.printBenefitPreview(
+                        String.format(form, eventPolicy, -benefitDiscount)
+                )
+        );
     }
 
     private String previewTypeComment(PreviewType previewType) {
