@@ -1,8 +1,14 @@
 package christmas.view;
 
+import christmas.constants.PreviewType;
+import java.time.LocalDate;
+
 public class OutputView {
     private OutputView() {
+    }
 
+    public static void printNewLine() {
+        System.out.println();
     }
 
     public static void printOpening() {
@@ -21,12 +27,21 @@ public class OutputView {
         System.out.println(order);
     }
 
-    public static void printOrderMenu(String menuName, String count) {
-        System.out.println(String.format("%s %s개", menuName, count));
+    public static void printPreviewCommnet(LocalDate date) {
+        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", date.getMonthValue(), date.getDayOfMonth());
     }
 
-    public static void printExceptionMessage(String messge) {
-        System.out.println(messge);
+    public static void printPreviewType(PreviewType type) {
+        printNewLine();
+        System.out.println(type.getType());
+    }
+
+    public static void printPreview(String format) {
+        System.out.println(format);
+    }
+
+    public static void printExceptionMessage(String message) {
+        System.out.println(message);
     }
 
 }

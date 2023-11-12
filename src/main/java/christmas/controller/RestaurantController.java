@@ -1,5 +1,7 @@
 package christmas.controller;
 
+import static christmas.constants.PreviewType.ORDER_MENU;
+
 import christmas.domain.Discount;
 import christmas.domain.Orders;
 import christmas.domain.ReservationDate;
@@ -17,49 +19,22 @@ public class RestaurantController {
     private Discount discount;
 
     public RestaurantController() {
-        openInit();
     }
 
-    private void openInit() {
-        // 식당 오픈 멘트
+    public void eventStart() {
+        opening();
+        reservation();
+        discountsApply();
+        eventPreviews();
+    }
+
+    private void opening() {
         OutputView.printOpening();
     }
 
-    public void reservation() {
-        // 예약 일자
+    private void reservation() {
         reservationDate = askReservationDate();
-
-        // 주문
         order = askOrder();
-
-        // 주문 내역 출력
-        orderHistoryPrint();
-
-        // 할인 계산
-        discountCalculate();
-    }
-
-    private void discountCalculate() {
-        discount = new Discount(order, reservationDate);
-
-        Map<String, Integer> benefitDiscounts = discount.getBenefitDiscounts();
-        System.out.println("benefitDiscounts = " + benefitDiscounts);
-    }
-
-    private Orders askOrder() {
-        try {
-            // 주문 요청 안내 멘트
-            OutputView.printRequestOrders();
-            // 주문 입력 기능
-            String readOrder = InputView.readOrders();
-            // 입력된 주문 출력
-            OutputView.printInputOrder(readOrder);
-            // 주문 저장
-            return new Orders(readOrder);
-        } catch (InvalidDataException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return askOrder();
-        }
     }
 
     private ReservationDate askReservationDate() {
@@ -76,8 +51,36 @@ public class RestaurantController {
         }
     }
 
-    private void orderHistoryPrint() {
-        order.getOrderMenu()
-                .forEach(OutputView::printOrderMenu);
+    private Orders askOrder() {
+        try {
+            OutputView.printRequestOrders();
+            String readOrder = InputView.readOrders();
+
+            OutputView.printInputOrder(readOrder);
+            return new Orders(readOrder);
+        } catch (InvalidDataException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return askOrder();
+        }
+    }
+
+    private void discountsApply() {
+        OutputView.printPreviewCommnet(reservationDate.getReservationDate());
+        discount = new Discount(order, reservationDate);
+    }
+
+    private void eventPreviews() {
+        orderMenuPrint();
+    }
+
+    private void orderMenuPrint() {
+        OutputView.printPreviewType(ORDER_MENU);
+        String form = ORDER_MENU.getFormat();
+
+        Map<String, String> orderMenu = order.getOrderMenu();
+
+        orderMenu.forEach(
+                (menu, quantity) -> OutputView.printPreview(String.format(form, menu, quantity))
+        );
     }
 }

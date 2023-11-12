@@ -24,6 +24,10 @@ public class ReservationDate {
         this.dayOfWeek = reservationDate.getDayOfWeek();
     }
 
+    public LocalDate getReservationDate() {
+        return reservationDate;
+    }
+
     public boolean compareDayOfWeek(DayOfWeek otherDayOfweek) {
         return dayOfWeek.equals(otherDayOfweek);
     }
