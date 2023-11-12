@@ -38,6 +38,7 @@ class ReservationDateTest {
     void checkHolyDayTest(LocalDate date, boolean result) {
         ReservationDate reservationDate = new ReservationDate(date);
         assertThat(reservationDate.isHoliday()).isEqualTo(result);
+        assertThat(reservationDate.isWeekday()).isEqualTo(!result);
     }
 
     static Stream<Arguments> holyDayCheckData() {

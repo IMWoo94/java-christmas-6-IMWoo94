@@ -2,8 +2,13 @@ package christmas.domain;
 
 import static christmas.constants.EventDate.CHRISTMAST;
 import static christmas.constants.EventDate.START_DATE;
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.MONDAY;
 import static java.time.DayOfWeek.SATURDAY;
 import static java.time.DayOfWeek.SUNDAY;
+import static java.time.DayOfWeek.THURSDAY;
+import static java.time.DayOfWeek.TUESDAY;
+import static java.time.DayOfWeek.WEDNESDAY;
 
 import christmas.constants.EventDate;
 import java.time.DayOfWeek;
@@ -27,9 +32,16 @@ public class ReservationDate {
         return hasDayOfWeekContains(SATURDAY, SUNDAY);
     }
 
+    public boolean isWeekday() {
+        return hasDayOfWeekContains(MONDAY,
+                TUESDAY,
+                WEDNESDAY,
+                THURSDAY,
+                FRIDAY);
+    }
+
     public boolean isSpecialDiscountDate() {
-        return (hasDayOfWeekContains(SUNDAY)
-                || reservationDate.equals(CHRISTMAST.getDate()));
+        return EventDate.isSpecialPeriod(reservationDate);
     }
 
     public boolean canEventPeriod() {
@@ -37,7 +49,7 @@ public class ReservationDate {
     }
 
     public int getEventAccumulateDays() {
-        int days = 0;
+        int days = -1;
         if (EventDate.canChristmastPeriod(reservationDate)) {
             return START_DATE.getAccumulateDays(reservationDate);
         }
