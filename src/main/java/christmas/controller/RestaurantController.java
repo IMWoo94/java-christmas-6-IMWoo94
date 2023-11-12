@@ -2,6 +2,7 @@ package christmas.controller;
 
 import static christmas.constants.PreviewType.BENEFIT_DETAILS;
 import static christmas.constants.PreviewType.ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT;
+import static christmas.constants.PreviewType.EVENT_BADGE;
 import static christmas.constants.PreviewType.GIVEAWAY_MENU;
 import static christmas.constants.PreviewType.ORDER_MENU;
 import static christmas.constants.PreviewType.TOTAL_BENEFIT_AMOUNT;
@@ -85,6 +86,7 @@ public class RestaurantController {
         eventBenefitPreview();
         totalBenefitAmountPreview();
         totalAmountAfterDiscountPreview();
+        badgePreview();
     }
 
     private void orderMenuPreview() {
@@ -143,16 +145,31 @@ public class RestaurantController {
     }
 
     private void totalAmountAfterDiscountPreview() {
-        //    - [ ] 할인 후 예상 결제 금액 출력 기능
-        /**
-         *<할인 후 예상 결제 금액>
-         * 8,500원
-         * <할인 후 예상 결제 금액>
-         * 135,754원
-         */
         String form = previewTypeComment(ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT);
         int payment = order.getCalculateTotalOrderAmount() - discount.getTotalBenefitAmount();
         OutputView.printBenefitPreview(form, payment);
+    }
+
+    private void badgePreview() {
+        String form = previewTypeComment(EVENT_BADGE);
+        int benefitAmount = discount.getTotalBenefitAmount();
+        if (benefitAmount > 20_000) {
+            OutputView.printBenefitPreview(form, "산타");
+        } else if (benefitAmount > 10_000) {
+            OutputView.printBenefitPreview(form, "트리");
+        } else if (benefitAmount > 5_000) {
+            OutputView.printBenefitPreview(form, "별");
+        }
+        if (benefitAmount == 0) {
+            OutputView.printNonBenefitPreview();
+        }
+        //    - [ ] 12월 이벤트 배지 출력 기능
+        /**
+         * <12월 이벤트 배지>
+         * 없음
+         * <12월 이벤트 배지>
+         * 산타
+         */
     }
 
     private String previewTypeComment(PreviewType previewType) {

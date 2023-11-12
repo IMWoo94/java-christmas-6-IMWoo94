@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import christmas.constants.EventDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -85,17 +86,18 @@ class ReservationDateTest {
     @ParameterizedTest
     @DisplayName("[정상] 크리스마스 이벤트 누적 일수 확인 기능 테스트")
     @MethodSource("eventAccumulateData")
-    void getEventAccumulateDaysTest(LocalDate date, int accumulateDays) {
+    void getEventAccumulateDaysTest(LocalDate date, int accumulateDays, boolean result) {
         ReservationDate reservationDate = new ReservationDate(date);
-        int christmasEventAccumulateDays = reservationDate.getEventAccumulateDays();
-        assertThat(christmasEventAccumulateDays).isEqualTo(accumulateDays);
+        Optional<Integer> days = reservationDate.getEventAccumulateDays();
+        assertThat(days.isPresent()).isEqualTo(result);
+        assertThat(days.orElseGet(() -> 0)).isEqualTo(accumulateDays);
     }
 
     static Stream<Arguments> eventAccumulateData() {
         return Stream.of(
-                Arguments.of(LocalDate.of(YEAR, MONTH, 31), 0),
-                Arguments.of(LocalDate.of(YEAR, MONTH, 24), 23),
-                Arguments.of(EventDate.CHRISTMAST.getDate(), 24)
+                Arguments.of(LocalDate.of(YEAR, MONTH, 31), 0, false),
+                Arguments.of(LocalDate.of(YEAR, MONTH, 24), 23, true),
+                Arguments.of(EventDate.CHRISTMAST.getDate(), 24, true)
         );
     }
 
