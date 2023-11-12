@@ -4,6 +4,7 @@ import static christmas.constants.VariousMenu.CHAMPAGNE;
 
 public enum EventPolicy {
 
+
     CHRISTMAS_D_DAY_DISCOUNT(1_000),
     WEEKDAY_DISCOUNT(2_023),
     WEEKEND_DISCOUNT(2_023),
@@ -18,5 +19,16 @@ public enum EventPolicy {
 
     public int getDiscount() {
         return discount;
+    }
+
+    public int getDiscountAmount(int count) {
+        if (this.equals(SPECIAL_DISCOUNT)
+                || this.equals(GIVEAWAY_EVENT)) {
+            return discount;
+        }
+        if (this.equals(CHRISTMAS_D_DAY_DISCOUNT)) {
+            return discount + 100 * count;
+        }
+        return discount * count;
     }
 }
