@@ -15,8 +15,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Orders {
-    private final String ORDER_REGEX = "([^,]+)-(\\d+)";
-    private final int limitQuantity = 20;
+    private static final String ORDER_REGEX = "([^,]+)-(\\d+)";
+    private static final int LIMIT_QUANTITY = 20;
     private final EnumMap<VariousMenu, Integer> orderMenu = new EnumMap<>(VariousMenu.class);
     private final EnumMap<MenuType, Integer> orderQuantityByMenuType = new EnumMap<>(MenuType.class);
     private final String orders;
@@ -99,8 +99,7 @@ public class Orders {
                 .stream()
                 .mapToInt(Integer::intValue).sum();
 
-        if (totalMenuQuantity > limitQuantity) {
-            // 주문 메뉴 수량 20개 초과 시 예외 발생
+        if (totalMenuQuantity > LIMIT_QUANTITY) {
             throw InvalidDataException.from(ORDER);
         }
     }
@@ -111,7 +110,6 @@ public class Orders {
                 .allMatch(menu -> menu.getType().equals(BEVERAGE));
 
         if (result) {
-            // 음료만 주문 시 예외 발생
             throw InvalidDataException.from(ORDER);
         }
     }
@@ -119,7 +117,7 @@ public class Orders {
     @Override
     public String toString() {
         return "Orders{" +
-                ", orderMenu=" + orderMenu +
+                "orderMenu=" + orderMenu +
                 ", orderQuantityByMenuType=" + orderQuantityByMenuType +
                 ", orders='" + orders + '\'' +
                 '}';

@@ -8,8 +8,10 @@ import static christmas.constants.EventPolicy.WEEKEND_DISCOUNT;
 
 import christmas.constants.EventPolicy;
 import christmas.constants.MenuType;
+import christmas.constants.VariousMenu;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Discount {
@@ -83,7 +85,12 @@ public class Discount {
     //    - [ ] 증정 기능 : 할인 전 총 주문 금액이 12만원 이상일때, 샴페인 1개 증정
     private void giveawayEventApply() {
         if (EventPolicy.checkGiveawayEventConditions(orders.getCalculateTotalOrderAmount())) {
-            int discountAmount = GIVEAWAY_EVENT.getDiscount();
+            List<VariousMenu> gifts = VariousMenu.getGifts();
+            int discountAmount = 0;
+            for (VariousMenu gift : gifts) {
+                int giftAmount = gift.giftAmount();
+                discountAmount += giftAmount;
+            }
 
             eventDiscount.put(GIVEAWAY_EVENT, discountAmount);
         }

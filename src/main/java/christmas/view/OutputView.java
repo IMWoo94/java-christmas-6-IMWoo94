@@ -36,8 +36,12 @@ public class OutputView {
         System.out.println(type.getType());
     }
 
-    public static void printPreview(String format) {
+    public static void printBenefitPreview(String format) {
         System.out.println(format);
+    }
+
+    public static void printNonBenefitPreview() {
+        System.out.println("없음");
     }
 
     public static void printExceptionMessage(String message) {
