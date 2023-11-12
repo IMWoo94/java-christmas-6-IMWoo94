@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
+
 import christmas.constants.EventPolicy;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -54,7 +56,29 @@ class DiscountTest {
                 Arguments.of("바비큐립-2,티본스테이크-4", 12138)
         );
     }
+
     //    - [ ] 특별 이벤트 할인 금액 계산 기능 : 이벤트 달력에 별이 있으면 총 주문 금액에서 1,000원 할인
+    @ParameterizedTest
+    @DisplayName("[정상] 특별 이벤트 할인 금액 테스트")
+    @MethodSource("specialDiscountData")
+    void specialDiscountApplyTest(String readOrder, int benefitAmount) {
+        Orders orders = new Orders(readOrder);
+        Discount discount = new Discount(orders);
+
+        discount.specialDiscountApply();
+
+        Map<String, Integer> eventDiscount = discount.getBenefitDiscounts();
+        int applyAmount = eventDiscount.get(SPECIAL_DISCOUNT.getEventName());
+        Assertions.assertThat(applyAmount).isEqualTo(benefitAmount);
+    }
+
+    static Stream<Arguments> specialDiscountData() {
+        return Stream.of(
+                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", 1000),
+                Arguments.of("바비큐립-2,티본스테이크-4", 1000)
+        );
+    }
+
     //    - [ ] 크리스마스 디데이 할인 금액 계산 기능 : 크리스마스 디데이 다가올수록 할인 금액 100원 씩 증가
     //    - [ ] 증정 기능 : 할인 전 총 주문 금액이 12만원 이상일때, 샴페인 1개 증정
 
