@@ -1,8 +1,9 @@
 package christmas.constants;
 
-import static christmas.constants.EventPolicy.GIFT_EVENT;
+import static christmas.constants.biz.EventPolicy.GIFT_EVENT;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.constants.biz.EventPolicy;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

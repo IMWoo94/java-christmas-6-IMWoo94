@@ -2,6 +2,7 @@ package christmas.constants;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import christmas.constants.biz.VariousMenu;
 import christmas.exception.InvalidDataException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

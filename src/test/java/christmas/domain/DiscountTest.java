@@ -1,10 +1,10 @@
 package christmas.domain;
 
-import static christmas.constants.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
-import static christmas.constants.EventPolicy.GIFT_EVENT;
-import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
-import static christmas.constants.EventPolicy.WEEKDAY_DISCOUNT;
-import static christmas.constants.EventPolicy.WEEKEND_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.GIFT_EVENT;
+import static christmas.constants.biz.EventPolicy.SPECIAL_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.WEEKDAY_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.WEEKEND_DISCOUNT;
 
 import java.time.LocalDate;
 import java.util.HashMap;

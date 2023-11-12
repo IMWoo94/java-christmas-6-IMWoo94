@@ -1,16 +1,16 @@
 package christmas.controller;
 
-import static christmas.constants.PreviewType.BENEFIT_DETAILS;
-import static christmas.constants.PreviewType.ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT;
-import static christmas.constants.PreviewType.EVENT_BADGE;
-import static christmas.constants.PreviewType.GIVEAWAY_MENU;
-import static christmas.constants.PreviewType.ORDER_MENU;
-import static christmas.constants.PreviewType.TOTAL_BENEFIT_AMOUNT;
-import static christmas.constants.PreviewType.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT;
+import static christmas.constants.biz.PreviewType.BENEFIT_DETAILS;
+import static christmas.constants.biz.PreviewType.ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT;
+import static christmas.constants.biz.PreviewType.EVENT_BADGE;
+import static christmas.constants.biz.PreviewType.GIVEAWAY_MENU;
+import static christmas.constants.biz.PreviewType.ORDER_MENU;
+import static christmas.constants.biz.PreviewType.TOTAL_BENEFIT_AMOUNT;
+import static christmas.constants.biz.PreviewType.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT;
 
-import christmas.constants.EventPolicy;
-import christmas.constants.PreviewType;
-import christmas.constants.VariousMenu;
+import christmas.constants.biz.EventPolicy;
+import christmas.constants.biz.PreviewType;
+import christmas.constants.biz.VariousMenu;
 import christmas.domain.Discount;
 import christmas.domain.Orders;
 import christmas.domain.ReservationDate;

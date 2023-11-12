@@ -3,7 +3,7 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.constants.MenuType;
+import christmas.constants.biz.MenuType;
 import christmas.exception.InvalidDataException;
 import java.util.HashMap;
 import java.util.Map;

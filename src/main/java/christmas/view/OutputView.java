@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.constants.PreviewType;
+import christmas.constants.biz.PreviewType;
 import java.time.LocalDate;
 
 public class OutputView {

@@ -1,6 +1,6 @@
 package christmas.exception;
 
-import static christmas.constants.ErrorMessage.INVALID_DATA;
+import static christmas.constants.message.ErrorMessage.INVALID_DATA;
 
 public class InvalidDataException extends CustomException {
     private InvalidDataException(String s) {

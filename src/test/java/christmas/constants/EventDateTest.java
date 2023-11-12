@@ -1,10 +1,11 @@
 package christmas.constants;
 
-import static christmas.constants.EventDate.CHRISTMAST;
-import static christmas.constants.EventDate.END_DATE;
-import static christmas.constants.EventDate.START_DATE;
+import static christmas.constants.biz.EventDate.CHRISTMAST;
+import static christmas.constants.biz.EventDate.END_DATE;
+import static christmas.constants.biz.EventDate.START_DATE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.constants.biz.EventDate;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

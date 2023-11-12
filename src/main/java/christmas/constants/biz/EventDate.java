@@ -1,4 +1,4 @@
-package christmas.constants;
+package christmas.constants.biz;
 
 import static christmas.constants.GlobalConstant.MONTH;
 import static christmas.constants.GlobalConstant.YEAR;

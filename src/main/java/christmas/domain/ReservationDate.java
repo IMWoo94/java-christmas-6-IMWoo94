@@ -1,7 +1,7 @@
 package christmas.domain;
 
-import static christmas.constants.EventDate.CHRISTMAST;
-import static christmas.constants.EventDate.START_DATE;
+import static christmas.constants.biz.EventDate.CHRISTMAST;
+import static christmas.constants.biz.EventDate.START_DATE;
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.MONDAY;
 import static java.time.DayOfWeek.SATURDAY;
@@ -10,7 +10,7 @@ import static java.time.DayOfWeek.THURSDAY;
 import static java.time.DayOfWeek.TUESDAY;
 import static java.time.DayOfWeek.WEDNESDAY;
 
-import christmas.constants.EventDate;
+import christmas.constants.biz.EventDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;

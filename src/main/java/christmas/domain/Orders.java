@@ -1,10 +1,10 @@
 package christmas.domain;
 
 import static christmas.constants.GlobalConstant.ORDER;
-import static christmas.constants.MenuType.BEVERAGE;
+import static christmas.constants.biz.MenuType.BEVERAGE;
 
-import christmas.constants.MenuType;
-import christmas.constants.VariousMenu;
+import christmas.constants.biz.MenuType;
+import christmas.constants.biz.VariousMenu;
 import christmas.exception.InvalidDataException;
 import java.util.Arrays;
 import java.util.EnumMap;

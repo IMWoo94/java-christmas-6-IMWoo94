@@ -4,7 +4,7 @@ import static christmas.constants.GlobalConstant.MONTH;
 import static christmas.constants.GlobalConstant.YEAR;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.constants.EventDate;
+import christmas.constants.biz.EventDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;

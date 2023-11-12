@@ -1,6 +1,6 @@
 package christmas.exception;
 
-import static christmas.constants.ErrorMessage.ERROR_PREFIX;
+import static christmas.constants.message.ErrorMessage.ERROR_PREFIX;
 
 public class CustomException extends IllegalArgumentException {
 

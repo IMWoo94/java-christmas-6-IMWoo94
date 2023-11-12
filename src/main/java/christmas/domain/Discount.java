@@ -1,13 +1,13 @@
 package christmas.domain;
 
-import static christmas.constants.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
-import static christmas.constants.EventPolicy.GIFT_EVENT;
-import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
-import static christmas.constants.EventPolicy.WEEKDAY_DISCOUNT;
-import static christmas.constants.EventPolicy.WEEKEND_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.GIFT_EVENT;
+import static christmas.constants.biz.EventPolicy.SPECIAL_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.WEEKDAY_DISCOUNT;
+import static christmas.constants.biz.EventPolicy.WEEKEND_DISCOUNT;
 
-import christmas.constants.EventPolicy;
-import christmas.constants.MenuType;
+import christmas.constants.biz.EventPolicy;
+import christmas.constants.biz.MenuType;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,10 +1,10 @@
-package christmas.constants;
+package christmas.constants.biz;
 
 import static christmas.constants.GlobalConstant.ORDER;
-import static christmas.constants.MenuType.APPETIZER;
-import static christmas.constants.MenuType.BEVERAGE;
-import static christmas.constants.MenuType.DESSERT;
-import static christmas.constants.MenuType.MAIN;
+import static christmas.constants.biz.MenuType.APPETIZER;
+import static christmas.constants.biz.MenuType.BEVERAGE;
+import static christmas.constants.biz.MenuType.DESSERT;
+import static christmas.constants.biz.MenuType.MAIN;
 
 import christmas.exception.InvalidDataException;
 import java.util.Arrays;
