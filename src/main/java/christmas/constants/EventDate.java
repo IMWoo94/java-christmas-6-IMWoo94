@@ -3,6 +3,7 @@ package christmas.constants;
 import static christmas.constants.GlobalConstant.MONTH;
 import static christmas.constants.GlobalConstant.YEAR;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -50,11 +51,13 @@ public enum EventDate {
                 CHRISTMAST.getPlusDays(1));
     }
 
+    public static boolean isSpecialPeriod(LocalDate date) {
+        return date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
+                || CHRISTMAST.dateEquals(date);
+    }
 
     private static boolean hasBetweenPeriod(LocalDate date, LocalDate beginDate, LocalDate endDate) {
         return date.isAfter(beginDate)
                 && date.isBefore(endDate);
     }
-
-
 }
