@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import static christmas.constants.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
 import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
 import static christmas.constants.EventPolicy.WEEKDAY_DISCOUNT;
 import static christmas.constants.EventPolicy.WEEKEND_DISCOUNT;
@@ -45,6 +46,11 @@ public class Discount {
     }
 
     //    - [ ] 크리스마스 디데이 할인 금액 계산 기능 : 크리스마스 디데이 다가올수록 할인 금액 100원 씩 증가
+    public void christmasDDayDiscountApply(int days) {
+        int discountAmount = CHRISTMAS_D_DAY_DISCOUNT.getDiscountAmount(days);
+
+        eventDiscount.put(CHRISTMAS_D_DAY_DISCOUNT, discountAmount);
+    }
     //    - [ ] 증정 기능 : 할인 전 총 주문 금액이 12만원 이상일때, 샴페인 1개 증정
 
     public Map<String, Integer> getBenefitDiscounts() {
