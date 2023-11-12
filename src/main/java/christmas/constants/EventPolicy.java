@@ -6,7 +6,7 @@ public enum EventPolicy {
     WEEKDAY_DISCOUNT(2_023, "평일 할인"),
     WEEKEND_DISCOUNT(2_023, "주말 할인"),
     SPECIAL_DISCOUNT(1_000, "특별 할인"),
-    GIVEAWAY_EVENT(0, "증정 이벤트");
+    GIFT_EVENT(0, "증정 이벤트");
 
     private final int discount;
     private final String eventName;
@@ -32,6 +32,13 @@ public enum EventPolicy {
             return discount + 100 * count;
         }
         return discount * count;
+    }
+
+    public int getGiftBenefitAmount() {
+        return VariousMenu.getGifts()
+                .stream()
+                .mapToInt(VariousMenu::giftAmount)
+                .sum();
     }
 
     public static boolean checkParticipationConditions(int amount) {

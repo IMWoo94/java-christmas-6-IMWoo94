@@ -1,17 +1,15 @@
 package christmas.domain;
 
 import static christmas.constants.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
-import static christmas.constants.EventPolicy.GIVEAWAY_EVENT;
+import static christmas.constants.EventPolicy.GIFT_EVENT;
 import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
 import static christmas.constants.EventPolicy.WEEKDAY_DISCOUNT;
 import static christmas.constants.EventPolicy.WEEKEND_DISCOUNT;
 
 import christmas.constants.EventPolicy;
 import christmas.constants.MenuType;
-import christmas.constants.VariousMenu;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -86,14 +84,9 @@ public class Discount {
     //    - [ ] 증정 기능 : 할인 전 총 주문 금액이 12만원 이상일때, 샴페인 1개 증정
     private void giveawayEventApply() {
         if (EventPolicy.checkGiveawayEventConditions(orders.getCalculateTotalOrderAmount())) {
-            List<VariousMenu> gifts = VariousMenu.getGifts();
-            int discountAmount = 0;
-            for (VariousMenu gift : gifts) {
-                int giftAmount = gift.giftAmount();
-                discountAmount += giftAmount;
-            }
-
-            eventDiscount.put(GIVEAWAY_EVENT, discountAmount);
+            int giftAmount = 0;
+            giftAmount = GIFT_EVENT.getGiftBenefitAmount();
+            eventDiscount.put(GIFT_EVENT, giftAmount);
         }
     }
 

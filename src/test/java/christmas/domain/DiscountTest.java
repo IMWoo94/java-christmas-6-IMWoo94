@@ -1,7 +1,7 @@
 package christmas.domain;
 
 import static christmas.constants.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
-import static christmas.constants.EventPolicy.GIVEAWAY_EVENT;
+import static christmas.constants.EventPolicy.GIFT_EVENT;
 import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
 import static christmas.constants.EventPolicy.WEEKDAY_DISCOUNT;
 import static christmas.constants.EventPolicy.WEEKEND_DISCOUNT;
@@ -40,7 +40,7 @@ class DiscountTest {
                         new ReservationDate(LocalDate.of(2023, 12, 1)),
                         new HashMap<String, Integer>() {
                             {
-                                put(GIVEAWAY_EVENT.getEventName(), GIVEAWAY_EVENT.getDiscount());
+                                put(GIFT_EVENT.getEventName(), GIFT_EVENT.getGiftBenefitAmount());
                                 put(CHRISTMAS_D_DAY_DISCOUNT.getEventName(), 1_000);
                                 put(WEEKDAY_DISCOUNT.getEventName(), 20_230);
                             }
@@ -60,7 +60,7 @@ class DiscountTest {
                         new HashMap<String, Integer>() {
                             {
                                 put(CHRISTMAS_D_DAY_DISCOUNT.getEventName(), 1_900);
-                                put(GIVEAWAY_EVENT.getEventName(), GIVEAWAY_EVENT.getDiscount());
+                                put(GIFT_EVENT.getEventName(), GIFT_EVENT.getGiftBenefitAmount());
                                 put(WEEKEND_DISCOUNT.getEventName(), 4_046);
                                 put(SPECIAL_DISCOUNT.getEventName(), 1_000);
 
@@ -72,7 +72,7 @@ class DiscountTest {
                         new HashMap<String, Integer>() {
                             {
                                 put(CHRISTMAS_D_DAY_DISCOUNT.getEventName(), 3_300);
-                                put(GIVEAWAY_EVENT.getEventName(), GIVEAWAY_EVENT.getDiscount());
+                                put(GIFT_EVENT.getEventName(), GIFT_EVENT.getGiftBenefitAmount());
                                 put(WEEKEND_DISCOUNT.getEventName(), 2_023);
                                 put(SPECIAL_DISCOUNT.getEventName(), 1_000);
                             }
@@ -82,7 +82,7 @@ class DiscountTest {
                         new ReservationDate(LocalDate.of(2023, 12, 26)),
                         new HashMap<String, Integer>() {
                             {
-                                put(GIVEAWAY_EVENT.getEventName(), GIVEAWAY_EVENT.getDiscount());
+                                put(GIFT_EVENT.getEventName(), GIFT_EVENT.getGiftBenefitAmount());
                                 put(WEEKDAY_DISCOUNT.getEventName(), 20_230);
                             }
                         })
