@@ -30,13 +30,10 @@ public class Orders {
 
     public Map<String, String> getOrderMenu() {
         Map<String, String> menus = new HashMap<>();
-        orderMenu.entrySet()
-                .stream()
-                .filter(menu -> menu.getValue() > 0)
-                .forEach(menu -> {
-                    menus.put(menu.getKey().getMenuName(), String.valueOf(menu.getValue()));
-                });
-
+        orderMenu.forEach(
+                (key, value) -> menus.put(key.getMenuName(), String.valueOf(value))
+        );
+        
         return menus;
     }
 
