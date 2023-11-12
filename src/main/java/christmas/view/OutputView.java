@@ -17,4 +17,12 @@ public class OutputView {
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
     }
 
+    public static void printInputOrder(String order) {
+        System.out.println(order);
+    }
+
+    public static void printOrderMenu(String menuName, String count) {
+        System.out.println(String.format("%s %s개", menuName, count));
+    }
+
 }
