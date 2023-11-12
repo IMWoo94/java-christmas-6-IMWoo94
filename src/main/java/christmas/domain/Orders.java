@@ -85,7 +85,7 @@ public class Orders {
     private void validateDuplicateMenu(VariousMenu menuName) {
         if (orderMenu.containsKey(menuName)) {
             // 중복 입력에 대한 예외 발생 처리
-            throw InvalidDataException.from(ORDER.getValue());
+            throw InvalidDataException.from(ORDER);
         }
     }
 
@@ -101,7 +101,7 @@ public class Orders {
 
         if (totalMenuQuantity > limitQuantity) {
             // 주문 메뉴 수량 20개 초과 시 예외 발생
-            throw InvalidDataException.from(ORDER.getValue());
+            throw InvalidDataException.from(ORDER);
         }
     }
 
@@ -112,7 +112,7 @@ public class Orders {
 
         if (result) {
             // 음료만 주문 시 예외 발생
-            throw InvalidDataException.from(ORDER.getValue());
+            throw InvalidDataException.from(ORDER);
         }
     }
 

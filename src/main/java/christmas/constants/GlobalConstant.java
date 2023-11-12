@@ -1,15 +1,12 @@
 package christmas.constants;
 
-public enum GlobalConstant {
-    DATE("날짜"),
-    ORDER("주문");
-    private final String value;
+public class GlobalConstant {
 
-    GlobalConstant(String value) {
-        this.value = value;
-    }
+    public final static String DATE = "날짜";
+    public final static String ORDER = "주문";
+    public final static int YEAR = 2023;
+    public final static int MONTH = 12;
 
-    public String getValue() {
-        return value;
+    private GlobalConstant() {
     }
 }

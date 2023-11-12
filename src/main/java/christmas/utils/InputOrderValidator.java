@@ -23,20 +23,20 @@ public class InputOrderValidator {
 
     private static void validateNull(String inputOrder) {
         if (inputOrder == null) {
-            throw InvalidDataException.from(ORDER.getValue());
+            throw InvalidDataException.from(ORDER);
         }
     }
 
     private static void validateEmpty(String inputOrder) {
         if (inputOrder.isBlank()) {
-            throw InvalidDataException.from(ORDER.getValue());
+            throw InvalidDataException.from(ORDER);
         }
     }
 
     private static void validateOrderFormat(String inputOrder) {
         Matcher matcher = PATTERN.matcher(inputOrder);
         if (!matcher.matches()) {
-            throw InvalidDataException.from(ORDER.getValue());
+            throw InvalidDataException.from(ORDER);
         }
     }
 }

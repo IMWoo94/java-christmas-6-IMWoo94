@@ -1,6 +1,5 @@
 package christmas.constants;
 
-import static christmas.constants.ErrorMessage.INVALID_DATA;
 import static christmas.constants.GlobalConstant.ORDER;
 import static christmas.constants.MenuType.APPETIZER;
 import static christmas.constants.MenuType.BEVERAGE;
@@ -58,6 +57,6 @@ public enum VariousMenu {
                 return menu;
             }
         }
-        throw new InvalidDataException(INVALID_DATA.getFormatMessage(ORDER.getValue()));
+        throw InvalidDataException.from(ORDER);
     }
 }

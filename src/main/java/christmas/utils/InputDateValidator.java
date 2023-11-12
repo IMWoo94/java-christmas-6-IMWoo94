@@ -19,13 +19,13 @@ public class InputDateValidator {
 
     private static void validateNull(String inputDate) {
         if (inputDate == null) {
-            throw InvalidDataException.from(DATE.getValue());
+            throw InvalidDataException.from(DATE);
         }
     }
 
     private static void validateEmpty(String inputDate) {
         if (inputDate.isBlank()) {
-            throw InvalidDataException.from(DATE.getValue());
+            throw InvalidDataException.from(DATE);
         }
     }
 
@@ -33,7 +33,7 @@ public class InputDateValidator {
         try {
             NumberFormat.getIntegerInstance().parse(inputDate);
         } catch (ParseException e) {
-            throw InvalidDataException.of(DATE.getValue(), e);
+            throw InvalidDataException.of(DATE, e);
         }
     }
 }
