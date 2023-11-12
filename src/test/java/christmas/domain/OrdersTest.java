@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.constants.MenuType;
 import christmas.exception.InvalidDataException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -62,9 +64,34 @@ class OrdersTest {
         );
     }
 
-    // 중복 입력 예외 발생
-    // 없는 메뉴 입력 시 예외 발생
-    // 메뉴 주문 수량 20 초과 시 예외 발생
+    @ParameterizedTest
+    @DisplayName("[정상] 주문 내역 테스트")
+    @MethodSource("orderHistoryData")
+    void getOrderHistoryTest(String readOrder, Map<String, String> historyOrder) {
+        Orders orders = new Orders(readOrder);
+        Map<String, String> orderMenu = orders.getOrderMenu();
+        assertThat(orderMenu).isEqualTo(historyOrder);
+        assertThat(orderMenu.size()).isEqualTo(historyOrder.size());
+    }
+
+    static Stream<Arguments> orderHistoryData() {
+        return Stream.of(
+                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", new HashMap<String, String>() {
+                    {
+                        put("해산물파스타", "1");
+                        put("레드와인", "2");
+                        put("초코케이크", "10");
+                    }
+                }),
+                Arguments.of("바비큐립-2,티본스테이크-4", new HashMap<String, String>() {
+                    {
+                        put("바비큐립", "2");
+                        put("티본스테이크", "4");
+                    }
+                })
+        );
+    }
+
     @ParameterizedTest
     @DisplayName("[예외] 주문 입력 기능 예외 테스트 : 중복 메뉴 입력, 없는 메뉴 입력, 주문 수량 초과, 음료만 주문 ")
     @MethodSource("errorOrderData")

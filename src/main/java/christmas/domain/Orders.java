@@ -9,6 +9,8 @@ import christmas.constants.VariousMenu;
 import christmas.exception.InvalidDataException;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +26,18 @@ public class Orders {
         orders = readOrder;
         saveOrderMenu();
         quantitySurveyByMenuType();
+    }
+
+    public Map<String, String> getOrderMenu() {
+        Map<String, String> menus = new HashMap<>();
+        orderMenu.entrySet()
+                .stream()
+                .filter(menu -> menu.getValue() > 0)
+                .forEach(menu -> {
+                    menus.put(menu.getKey().getMenuName(), String.valueOf(menu.getValue()));
+                });
+
+        return menus;
     }
 
     public int getCalculateTotalOrderAmount() {
