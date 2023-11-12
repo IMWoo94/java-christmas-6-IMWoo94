@@ -4,6 +4,7 @@ import christmas.constants.ErrorMessage;
 import christmas.constants.VariousMenu;
 import christmas.exception.InvalidDataException;
 import java.util.EnumMap;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,6 +50,7 @@ public class Orders {
 
     private void checkOrderMenu() {
         validateMenuQuantityOver();
+        validateOrderOnlyBeverage();
     }
 
     private void validateMenuQuantityOver() {
@@ -56,6 +58,17 @@ public class Orders {
             // 주문 메뉴 수량 20개 초과 시 예외 발생
             throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage("주문"));
         }
+    }
+
+    private void validateOrderOnlyBeverage() {
+        for (Entry<VariousMenu, Integer> variousMenus : orderMenu.entrySet()) {
+            VariousMenu menu = variousMenus.getKey();
+            if (!menu.getType().equals("음료")) {
+                return;
+            }
+        }
+        // 음료만 주문 시 예외 발생
+        throw new InvalidDataException(ErrorMessage.INVALID_DATA.getFormatMessage("주문"));
     }
 
     @Override

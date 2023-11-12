@@ -34,7 +34,7 @@ class OrdersTest {
     // 없는 메뉴 입력 시 예외 발생
     // 메뉴 주문 수량 20 초과 시 예외 발생
     @ParameterizedTest
-    @DisplayName("[예외] 주문 입력 기능 예외 테스트 : 중복 메뉴 입력, 없는 메뉴 입력, 주문 수량 초과 ")
+    @DisplayName("[예외] 주문 입력 기능 예외 테스트 : 중복 메뉴 입력, 없는 메뉴 입력, 주문 수량 초과, 음료만 주문 ")
     @MethodSource("errorOrderData")
     void orderDuplicateAndNoMenuExceptionTest(String readOrder) {
         assertThatThrownBy(() -> new Orders(readOrder))
@@ -47,7 +47,8 @@ class OrdersTest {
         return Stream.of(
                 Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10,없는메뉴-3"),
                 Arguments.of("바비큐립-2,티본스테이크-4,바비큐립-4"),
-                Arguments.of("바비큐립-10,티본스테이크-10,바비큐립-1")
+                Arguments.of("바비큐립-10,티본스테이크-10,바비큐립-1"),
+                Arguments.of("제로콜라-10,레드와인-9,샴페인-1")
         );
     }
 
