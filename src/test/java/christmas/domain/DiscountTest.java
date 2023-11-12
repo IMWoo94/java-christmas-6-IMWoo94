@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import static christmas.constants.EventPolicy.CHRISTMAS_D_DAY_DISCOUNT;
+import static christmas.constants.EventPolicy.GIVEAWAY_EVENT;
 import static christmas.constants.EventPolicy.SPECIAL_DISCOUNT;
 
 import christmas.constants.EventPolicy;
@@ -101,6 +102,27 @@ class DiscountTest {
                 Arguments.of("바비큐립-2,티본스테이크-4", 1500, 5)
         );
     }
+
     //    - [ ] 증정 기능 : 할인 전 총 주문 금액이 12만원 이상일때, 샴페인 1개 증정
+    @ParameterizedTest
+    @DisplayName("[정상] 증정 이벤트 할인 금액 테스트")
+    @MethodSource("giveawayEventData")
+    void giveawayEventApplyTest(String readOrder, int benefitAmount) {
+        Orders orders = new Orders(readOrder);
+        Discount discount = new Discount(orders);
+
+        discount.giveawayEventApply();
+
+        Map<String, Integer> eventDiscount = discount.getBenefitDiscounts();
+        int applyAmount = eventDiscount.get(GIVEAWAY_EVENT.getEventName());
+        Assertions.assertThat(applyAmount).isEqualTo(benefitAmount);
+    }
+
+    static Stream<Arguments> giveawayEventData() {
+        return Stream.of(
+                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", 25_000),
+                Arguments.of("바비큐립-2,티본스테이크-4", 25_000)
+        );
+    }
 
 }
