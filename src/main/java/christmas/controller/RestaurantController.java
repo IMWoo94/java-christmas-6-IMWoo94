@@ -8,6 +8,7 @@ import static christmas.constants.biz.PreviewType.ORDER_MENU;
 import static christmas.constants.biz.PreviewType.TOTAL_BENEFIT_AMOUNT;
 import static christmas.constants.biz.PreviewType.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT;
 
+import christmas.constants.biz.Badges;
 import christmas.constants.biz.EventPolicy;
 import christmas.constants.biz.PreviewType;
 import christmas.constants.biz.VariousMenu;
@@ -56,7 +57,7 @@ public class RestaurantController {
             LocalDate date = Parser.StringToLocalDate(readDate);
             return new ReservationDate(date);
         } catch (InvalidDataException e) {
-            OutputView.printExceptionMessage(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             return askReservationDate();
         }
     }
@@ -69,7 +70,7 @@ public class RestaurantController {
             OutputView.printInputOrder(readOrder);
             return new Orders(readOrder);
         } catch (InvalidDataException e) {
-            OutputView.printExceptionMessage(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             return askOrder();
         }
     }
@@ -153,23 +154,8 @@ public class RestaurantController {
     private void badgePreview() {
         String form = previewTypeComment(EVENT_BADGE);
         int benefitAmount = discount.getTotalBenefitAmount();
-        if (benefitAmount > 20_000) {
-            OutputView.printBenefitPreview(form, "산타");
-        } else if (benefitAmount > 10_000) {
-            OutputView.printBenefitPreview(form, "트리");
-        } else if (benefitAmount > 5_000) {
-            OutputView.printBenefitPreview(form, "별");
-        }
-        if (benefitAmount == 0) {
-            OutputView.printNonBenefitPreview();
-        }
-        //    - [ ] 12월 이벤트 배지 출력 기능
-        /**
-         * <12월 이벤트 배지>
-         * 없음
-         * <12월 이벤트 배지>
-         * 산타
-         */
+        Badges badge = Badges.getContionsBadge(benefitAmount);
+        OutputView.printBenefitPreview(form, badge.getName());
     }
 
     private String previewTypeComment(PreviewType previewType) {

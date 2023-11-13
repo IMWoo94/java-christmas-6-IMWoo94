@@ -44,7 +44,7 @@ public class OutputView {
         System.out.println("없음");
     }
 
-    public static void printExceptionMessage(String message) {
+    public static void printMessage(String message) {
         System.out.println(message);
     }
 
