@@ -1,12 +1,20 @@
 package christmas.controller;
 
 import static christmas.constants.biz.PreviewType.BENEFIT_DETAILS;
-import static christmas.constants.biz.PreviewType.ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT;
 import static christmas.constants.biz.PreviewType.EVENT_BADGE;
-import static christmas.constants.biz.PreviewType.GIVEAWAY_MENU;
+import static christmas.constants.biz.PreviewType.GIFT_MENU;
 import static christmas.constants.biz.PreviewType.ORDER_MENU;
 import static christmas.constants.biz.PreviewType.TOTAL_BENEFIT_AMOUNT;
+import static christmas.constants.biz.PreviewType.TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT;
 import static christmas.constants.biz.PreviewType.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT;
+import static christmas.constants.message.PrintMessage.BENEFIT_PREVIEW;
+import static christmas.constants.message.PrintMessage.NONE;
+import static christmas.constants.message.PrintMessage.OPENING;
+import static christmas.constants.message.PrintMessage.REQUEST_ORDER;
+import static christmas.constants.message.PrintMessage.REQUEST_RESERVATION;
+import static christmas.view.OutputView.printMessage;
+import static christmas.view.OutputView.printNonBenefitPreview;
+import static christmas.view.OutputView.printPreviewType;
 
 import christmas.constants.biz.Badges;
 import christmas.constants.biz.EventPolicy;
@@ -18,7 +26,6 @@ import christmas.domain.ReservationDate;
 import christmas.exception.InvalidDataException;
 import christmas.utils.Parser;
 import christmas.view.InputView;
-import christmas.view.OutputView;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +47,7 @@ public class RestaurantController {
     }
 
     private void opening() {
-        OutputView.printOpening();
+        printMessage(OPENING.getMessage());
     }
 
     private void reservation() {
@@ -50,40 +57,39 @@ public class RestaurantController {
 
     private ReservationDate askReservationDate() {
         try {
-            // 식당 예약 안내 멘트
-            OutputView.printRequestReservationDate();
+            printMessage(REQUEST_RESERVATION.getMessage());
 
             String readDate = InputView.readReservationDate();
             LocalDate date = Parser.StringToLocalDate(readDate);
             return new ReservationDate(date);
         } catch (InvalidDataException e) {
-            OutputView.printMessage(e.getMessage());
+            printMessage(e.getMessage());
             return askReservationDate();
         }
     }
 
     private Orders askOrder() {
         try {
-            OutputView.printRequestOrders();
+            printMessage(REQUEST_ORDER.getMessage());
             String readOrder = InputView.readOrders();
 
-            OutputView.printInputOrder(readOrder);
             return new Orders(readOrder);
         } catch (InvalidDataException e) {
-            OutputView.printMessage(e.getMessage());
+            printMessage(e.getMessage());
             return askOrder();
         }
     }
 
     private void discountsApply() {
-        OutputView.printPreviewCommnet(reservationDate.getReservationDate());
+        printMessage(
+                BENEFIT_PREVIEW.getFormatMessage(reservationDate.getMonth(), reservationDate.getDays()));
         discount = new Discount(order, reservationDate);
     }
 
     private void eventPreviews() {
         orderMenuPreview();
         totalAmountBeforeDiscountPreview();
-        giveawayPreview();
+        giftPreview();
         eventBenefitPreview();
         totalBenefitAmountPreview();
         totalAmountAfterDiscountPreview();
@@ -96,7 +102,7 @@ public class RestaurantController {
         Map<String, String> orderMenu = order.getOrderMenu();
 
         orderMenu.forEach(
-                (menu, quantity) -> OutputView.printBenefitPreview(form, menu, quantity)
+                (menu, quantity) -> printMessage(ORDER_MENU.getFormatMessage(menu, quantity))
         );
     }
 
@@ -105,36 +111,36 @@ public class RestaurantController {
 
         int orderPrice = order.getCalculateTotalOrderAmount();
 
-        OutputView.printBenefitPreview(form, orderPrice);
+        printMessage(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT.getFormatMessage(orderPrice));
     }
 
-    private void giveawayPreview() {
-        String form = previewTypeComment(GIVEAWAY_MENU);
-        List<VariousMenu> gifts = VariousMenu.getGifts();
+    private void giftPreview() {
+        String form = previewTypeComment(GIFT_MENU);
         int price = order.getCalculateTotalOrderAmount();
+
         if (EventPolicy.checkGiveawayEventConditions(price)) {
+            List<VariousMenu> gifts = VariousMenu.getGifts();
             for (VariousMenu gift : gifts) {
                 int quantity = gift.getQuantity();
                 String giftMenuName = gift.getMenuName();
-                OutputView.printBenefitPreview(form, giftMenuName, quantity);
+                printMessage(GIFT_MENU.getFormatMessage(giftMenuName, quantity));
             }
             return;
         }
-        OutputView.printNonBenefitPreview();
+        printNonBenefitPreview();
     }
 
     private void eventBenefitPreview() {
         String form = previewTypeComment(BENEFIT_DETAILS);
         Map<String, Integer> benefitDiscounts = discount.getBenefitDiscounts();
         if (benefitDiscounts.isEmpty()) {
-            OutputView.printNonBenefitPreview();
+            printMessage(NONE.getMessage());
             return;
         }
 
         benefitDiscounts.forEach(
-                (eventPolicy, benefitDiscount) -> OutputView.printBenefitPreview(
-                        form, eventPolicy, -benefitDiscount
-                )
+                (eventPolicy, benefitDiscount) ->
+                        printMessage(BENEFIT_DETAILS.getFormatMessage(eventPolicy, -benefitDiscount))
         );
     }
 
@@ -142,24 +148,29 @@ public class RestaurantController {
         String form = previewTypeComment(TOTAL_BENEFIT_AMOUNT);
 
         int benefitAmount = discount.getTotalBenefitAmount();
-        OutputView.printBenefitPreview(form, -benefitAmount);
+        printMessage(TOTAL_BENEFIT_AMOUNT.getFormatMessage(-benefitAmount));
     }
 
     private void totalAmountAfterDiscountPreview() {
-        String form = previewTypeComment(ESTIMATED_PAYMENT_AMOUNT_AFTER_DISCOUNT);
+        String form = previewTypeComment(TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT);
+
         int payment = order.getCalculateTotalOrderAmount() - discount.getTotalBenefitAmount();
-        OutputView.printBenefitPreview(form, payment);
+
+        printMessage(TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT.getFormatMessage(payment));
     }
 
     private void badgePreview() {
         String form = previewTypeComment(EVENT_BADGE);
+
         int benefitAmount = discount.getTotalBenefitAmount();
+
         Badges badge = Badges.getContionsBadge(benefitAmount);
-        OutputView.printBenefitPreview(form, badge.getName());
+
+        printMessage(EVENT_BADGE.getFormatMessage(badge.getName()));
     }
 
     private String previewTypeComment(PreviewType previewType) {
-        OutputView.printPreviewType(previewType);
+        printPreviewType(previewType);
         return previewType.getFormat();
     }
 }
