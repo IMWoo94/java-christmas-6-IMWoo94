@@ -13,7 +13,6 @@ import static christmas.constants.message.PrintMessage.OPENING;
 import static christmas.constants.message.PrintMessage.REQUEST_ORDER;
 import static christmas.constants.message.PrintMessage.REQUEST_RESERVATION;
 import static christmas.view.OutputView.printMessage;
-import static christmas.view.OutputView.printNonBenefitPreview;
 import static christmas.view.OutputView.printPreviewType;
 
 import christmas.constants.biz.Badges;
@@ -127,7 +126,7 @@ public class RestaurantController {
             }
             return;
         }
-        printNonBenefitPreview();
+        printMessage(NONE.getMessage());
     }
 
     private void eventBenefitPreview() {
