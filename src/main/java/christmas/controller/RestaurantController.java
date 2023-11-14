@@ -55,27 +55,29 @@ public class RestaurantController {
     }
 
     private ReservationDate askReservationDate() {
-        try {
-            printMessage(REQUEST_RESERVATION.getMessage());
+        while (true) {
+            try {
+                printMessage(REQUEST_RESERVATION.getMessage());
 
-            String readDate = InputView.readReservationDate();
-            LocalDate date = Parser.StringToLocalDate(readDate);
-            return new ReservationDate(date);
-        } catch (InvalidDataException e) {
-            printMessage(e.getMessage());
-            return askReservationDate();
+                String readDate = InputView.readReservationDate();
+                LocalDate date = Parser.StringToLocalDate(readDate);
+                return new ReservationDate(date);
+            } catch (InvalidDataException e) {
+                printMessage(e.getMessage());
+            }
         }
     }
 
     private Orders askOrder() {
-        try {
-            printMessage(REQUEST_ORDER.getMessage());
-            String readOrder = InputView.readOrders();
+        while (true) {
+            try {
+                printMessage(REQUEST_ORDER.getMessage());
+                String readOrder = InputView.readOrders();
 
-            return new Orders(readOrder);
-        } catch (InvalidDataException e) {
-            printMessage(e.getMessage());
-            return askOrder();
+                return new Orders(readOrder);
+            } catch (InvalidDataException e) {
+                printMessage(e.getMessage());
+            }
         }
     }
 
