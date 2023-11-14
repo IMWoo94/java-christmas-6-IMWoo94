@@ -28,6 +28,7 @@ class EventDateTest {
     @DisplayName("[정상] 이벤트 기간 빼기")
     void eventDateMinusDays() {
         LocalDate date = START_DATE.getMinusDays(10);
+
         assertThat(date).isEqualTo(LocalDate.of(YEAR, MONTH, 1).minusDays(10));
         assertThat(date).isEqualTo(LocalDate.of(YEAR, MONTH, 21));
     }
@@ -36,6 +37,7 @@ class EventDateTest {
     @DisplayName("[정상] 이벤트 기간 더하기")
     void eventDatePlusDays() {
         LocalDate date = START_DATE.getPlusDays(10);
+
         assertThat(date).isEqualTo(LocalDate.of(YEAR, MONTH, 1).plusDays(10));
         assertThat(date).isEqualTo(LocalDate.of(YEAR, MONTH, 11));
     }
@@ -61,8 +63,11 @@ class EventDateTest {
     @DisplayName("[정상] 입력 된 일자가 이벤트 기간에 포함 되는지 테스트")
     void canEventPeriodTest() {
         LocalDate otherDate = LocalDate.of(YEAR, MONTH, 23);
+
         assertThat(EventDate.canEventPeriod(otherDate)).isTrue();
+
         LocalDate otherDate2 = LocalDate.of(YEAR, MONTH - 1, 23);
+
         assertThat(EventDate.canEventPeriod(otherDate2)).isFalse();
     }
 
@@ -70,8 +75,11 @@ class EventDateTest {
     @DisplayName("[정상] 입력 된 일자가 크리스마스 기간에 포함 되는지 테스트")
     void canChristmastPeriodTest() {
         LocalDate otherDate = LocalDate.of(YEAR, MONTH, 25);
+
         assertThat(EventDate.canChristmastPeriod(otherDate)).isTrue();
+
         LocalDate otherDate2 = LocalDate.of(YEAR, MONTH, 23);
+
         assertThat(EventDate.canChristmastPeriod(otherDate2)).isFalse();
     }
 }

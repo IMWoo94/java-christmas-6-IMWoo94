@@ -30,6 +30,7 @@ class VariousMenuTest {
     @DisplayName("[정상] 증정 메뉴 조회 테스트")
     void checkGiftMenuTest() {
         List<VariousMenu> gifts = VariousMenu.getGifts();
+
         assertThat(gifts).isNotNull();
         assertThat(gifts).contains(VariousMenu.CHAMPAGNE);
     }

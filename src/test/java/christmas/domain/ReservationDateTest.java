@@ -20,6 +20,7 @@ class ReservationDateTest {
     @MethodSource("dayOfWeekCompareData")
     void checkDayOfWeekCompareTest(LocalDate date) {
         ReservationDate reservationDate = new ReservationDate(date);
+
         assertThat(reservationDate).isNotNull();
     }
 
@@ -36,6 +37,7 @@ class ReservationDateTest {
     @MethodSource("holyDayCheckData")
     void checkHolyDayTest(LocalDate date, boolean result) {
         ReservationDate reservationDate = new ReservationDate(date);
+
         assertThat(reservationDate.isHoliday()).isEqualTo(result);
         assertThat(reservationDate.isWeekday()).isEqualTo(!result);
     }
@@ -53,6 +55,7 @@ class ReservationDateTest {
     @MethodSource("specialDiscountDate")
     void checkSpecialDiscountDateTest(LocalDate date, boolean result) {
         ReservationDate reservationDate = new ReservationDate(date);
+
         assertThat(reservationDate.isSpecialDiscountDate()).isEqualTo(result);
     }
 
@@ -69,6 +72,7 @@ class ReservationDateTest {
     @MethodSource("eventDiscountDate")
     void checkEventPeriodTest(LocalDate date, boolean result) {
         ReservationDate reservationDate = new ReservationDate(date);
+
         assertThat(reservationDate.canEventPeriod()).isEqualTo(result);
     }
 
@@ -87,6 +91,7 @@ class ReservationDateTest {
     void getEventAccumulateDaysTest(LocalDate date, int accumulateDays, boolean result) {
         ReservationDate reservationDate = new ReservationDate(date);
         Optional<Integer> days = reservationDate.getEventAccumulateDays();
+
         assertThat(days.isPresent()).isEqualTo(result);
         assertThat(days.orElseGet(() -> 0)).isEqualTo(accumulateDays);
     }
@@ -104,6 +109,7 @@ class ReservationDateTest {
     @MethodSource("christmastDate")
     void checkChristmasDateTest(LocalDate date, boolean result) {
         ReservationDate reservationDate = new ReservationDate(date);
+
         assertThat(reservationDate.isChristmastDate()).isEqualTo(result);
     }
 

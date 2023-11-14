@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import static christmas.constants.biz.MenuType.DESSERT;
+import static christmas.constants.biz.MenuType.MAIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -23,6 +25,7 @@ class OrdersTest {
     @MethodSource("successOrderData")
     void orderSuccess(String readOrder, String otherOrder) {
         Orders orders = new Orders(readOrder);
+
         assertThat(orders.toString()).contains(otherOrder);
     }
 
@@ -38,6 +41,7 @@ class OrdersTest {
     @MethodSource("calculateTotalOrderAmountData")
     void calculateTotalOrderAmountSuccess(String readOrder, int totalAmount) {
         Orders orders = new Orders(readOrder);
+
         assertThat(orders.getCalculateTotalOrderAmount()).isEqualTo(totalAmount);
     }
 
@@ -54,13 +58,14 @@ class OrdersTest {
     @MethodSource("quantityByMenuTypeData")
     void getQuantityByMenuTypeTest(String readOrder, MenuType type, int quantity) {
         Orders orders = new Orders(readOrder);
+
         assertThat(orders.getQuantityByMenuType(type)).isEqualTo(quantity);
     }
 
     static Stream<Arguments> quantityByMenuTypeData() {
         return Stream.of(
-                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", MenuType.DESSERT, 10),
-                Arguments.of("바비큐립-2,티본스테이크-4", MenuType.MAIN, 6)
+                Arguments.of("해산물파스타-1,레드와인-2,초코케이크-10", DESSERT, 10),
+                Arguments.of("바비큐립-2,티본스테이크-4", MAIN, 6)
         );
     }
 
@@ -70,6 +75,7 @@ class OrdersTest {
     void getOrderHistoryTest(String readOrder, Map<String, String> historyOrder) {
         Orders orders = new Orders(readOrder);
         Map<String, String> orderMenu = orders.getOrderMenu();
+
         assertThat(orderMenu).isEqualTo(historyOrder);
         assertThat(orderMenu.size()).isEqualTo(historyOrder.size());
     }
@@ -110,6 +116,4 @@ class OrdersTest {
                 Arguments.of("제로콜라-10,레드와인-9,샴페인-1")
         );
     }
-
-
 }
