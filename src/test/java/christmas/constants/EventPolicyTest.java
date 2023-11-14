@@ -25,7 +25,7 @@ class EventPolicyTest {
     @DisplayName("[정상] 증정 대상 확인 테스트")
     @CsvSource(value = {"120_000:true", "2_000:false"}, delimiter = ':')
     void checkGiveawayEventConditions(int amount, boolean result) {
-        assertThat(EventPolicy.checkGiveawayEventConditions(amount)).isEqualTo(result);
+        assertThat(EventPolicy.checkGiftEventConditions(amount)).isEqualTo(result);
     }
 
     @ParameterizedTest

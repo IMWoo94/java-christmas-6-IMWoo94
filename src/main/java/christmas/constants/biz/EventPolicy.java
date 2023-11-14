@@ -45,7 +45,7 @@ public enum EventPolicy {
         return amount >= 10_000;
     }
 
-    public static boolean checkGiveawayEventConditions(int amount) {
+    public static boolean checkGiftEventConditions(int amount) {
         return amount >= 120_000;
     }
 }
