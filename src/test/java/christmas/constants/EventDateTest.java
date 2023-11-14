@@ -30,7 +30,7 @@ class EventDateTest {
         LocalDate date = START_DATE.getMinusDays(10);
 
         assertThat(date).isEqualTo(LocalDate.of(YEAR, MONTH, 1).minusDays(10));
-        assertThat(date).isEqualTo(LocalDate.of(YEAR, MONTH, 21));
+        assertThat(date).isEqualTo(LocalDate.of(YEAR, MONTH - 1, 21));
     }
 
     @Test
@@ -78,7 +78,7 @@ class EventDateTest {
 
         assertThat(EventDate.canChristmastPeriod(otherDate)).isTrue();
 
-        LocalDate otherDate2 = LocalDate.of(YEAR, MONTH, 23);
+        LocalDate otherDate2 = LocalDate.of(YEAR, MONTH, 29);
 
         assertThat(EventDate.canChristmastPeriod(otherDate2)).isFalse();
     }

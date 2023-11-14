@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class VariousMenuTest {
 
     private static final String ERROR_PREFIX = "[ERROR]";
-    private static final String ERROR_ORDER_MESSAGE = "유효 하지 않은 주문입니다. 다시 입력해 주세요.";
+    private static final String ERROR_ORDER_MESSAGE = "유효하지 않은 주문입니다. 다시 입력해 주세요.";
 
     @ParameterizedTest
     @DisplayName("[예외] 주문 내역 메뉴에 없는 메뉴 주문 시 예외 테스트")
