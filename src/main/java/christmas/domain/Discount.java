@@ -83,7 +83,7 @@ public class Discount {
 
     //    - [ ] 증정 기능 : 할인 전 총 주문 금액이 12만원 이상일때, 샴페인 1개 증정
     private void giveawayEventApply() {
-        if (EventPolicy.checkGiveawayEventConditions(orders.getCalculateTotalOrderAmount())) {
+        if (EventPolicy.checkGiftEventConditions(orders.getCalculateTotalOrderAmount())) {
             int giftAmount = 0;
             giftAmount = GIFT_EVENT.getGiftBenefitAmount();
             eventDiscount.put(GIFT_EVENT, giftAmount);
