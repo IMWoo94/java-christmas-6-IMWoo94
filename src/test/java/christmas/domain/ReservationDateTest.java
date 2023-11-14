@@ -5,7 +5,6 @@ import static christmas.constants.GlobalConstant.YEAR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.constants.biz.EventDate;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -19,17 +18,16 @@ class ReservationDateTest {
     @ParameterizedTest
     @DisplayName("[정상] 예약 일자 저장 요일 정보 등록 기능 테스트")
     @MethodSource("dayOfWeekCompareData")
-    void checkDayOfWeekCompareTest(LocalDate date, DayOfWeek otherDayOfWeek) {
+    void checkDayOfWeekCompareTest(LocalDate date) {
         ReservationDate reservationDate = new ReservationDate(date);
         assertThat(reservationDate).isNotNull();
-        assertThat(reservationDate.compareDayOfWeek(otherDayOfWeek)).isTrue();
     }
 
     static Stream<Arguments> dayOfWeekCompareData() {
         return Stream.of(
-                Arguments.of(LocalDate.of(YEAR, MONTH, 12), DayOfWeek.TUESDAY),
-                Arguments.of(LocalDate.of(YEAR, MONTH, 23), DayOfWeek.SATURDAY),
-                Arguments.of(LocalDate.of(YEAR, MONTH, 31), DayOfWeek.SUNDAY)
+                Arguments.of(LocalDate.of(YEAR, MONTH, 12)),
+                Arguments.of(LocalDate.of(YEAR, MONTH, 23)),
+                Arguments.of(LocalDate.of(YEAR, MONTH, 31))
         );
     }
 

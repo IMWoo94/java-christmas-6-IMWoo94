@@ -17,20 +17,16 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class ReservationDate {
-    private final LocalDate reservationDate;
+    private final LocalDate date;
     private final DayOfWeek dayOfWeek;
 
-    public ReservationDate(LocalDate reservationDate) {
-        this.reservationDate = reservationDate;
-        this.dayOfWeek = reservationDate.getDayOfWeek();
+    public ReservationDate(LocalDate date) {
+        this.date = date;
+        this.dayOfWeek = date.getDayOfWeek();
     }
 
     public LocalDate getReservationDate() {
-        return reservationDate;
-    }
-
-    public boolean compareDayOfWeek(DayOfWeek otherDayOfweek) {
-        return dayOfWeek.equals(otherDayOfweek);
+        return date;
     }
 
     public boolean isHoliday() {
@@ -46,27 +42,39 @@ public class ReservationDate {
     }
 
     public boolean isSpecialDiscountDate() {
-        return EventDate.isSpecialPeriod(reservationDate);
+        return EventDate.isSpecialPeriod(date);
     }
 
     public boolean canEventPeriod() {
-        return EventDate.canEventPeriod(reservationDate);
+        return EventDate.canEventPeriod(date);
     }
 
     public Optional<Integer> getEventAccumulateDays() {
-        if (EventDate.canChristmastPeriod(reservationDate)) {
-            return Optional.of(START_DATE.getAccumulateDays(reservationDate));
+        if (EventDate.canChristmastPeriod(date)) {
+            return Optional.of(START_DATE.getAccumulateDays(date));
         }
         return Optional.empty();
     }
 
     public boolean isChristmastDate() {
-        return CHRISTMAST.dateEquals(reservationDate);
+        return CHRISTMAST.dateEquals(date);
+    }
+
+    private boolean compareDayOfWeek(DayOfWeek otherDayOfweek) {
+        return dayOfWeek.equals(otherDayOfweek);
     }
 
     private boolean hasDayOfWeekContains(DayOfWeek... otherDayOfWeek) {
         return Arrays.stream(otherDayOfWeek)
                 .anyMatch(this::compareDayOfWeek);
+    }
+
+    public int getMonth() {
+        return date.getMonthValue();
+    }
+
+    public int getDays() {
+        return date.getDayOfMonth();
     }
 
 }
