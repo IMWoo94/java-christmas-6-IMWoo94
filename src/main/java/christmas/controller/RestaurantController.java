@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import static christmas.constants.biz.EventPolicy.checkGiftEventConditions;
 import static christmas.constants.biz.PreviewType.BENEFIT_DETAILS;
 import static christmas.constants.biz.PreviewType.EVENT_BADGE;
 import static christmas.constants.biz.PreviewType.GIFT_MENU;
@@ -16,7 +17,6 @@ import static christmas.view.OutputView.printMessage;
 import static christmas.view.OutputView.printPreviewType;
 
 import christmas.constants.biz.Badges;
-import christmas.constants.biz.EventPolicy;
 import christmas.constants.biz.PreviewType;
 import christmas.constants.biz.VariousMenu;
 import christmas.domain.Discount;
@@ -96,7 +96,7 @@ public class RestaurantController {
     }
 
     private void orderMenuPreview() {
-        String form = previewTypeComment(ORDER_MENU);
+        previewTypeComment(ORDER_MENU);
 
         Map<String, String> orderMenu = order.getOrderMenu();
 
@@ -106,7 +106,7 @@ public class RestaurantController {
     }
 
     private void totalAmountBeforeDiscountPreview() {
-        String form = previewTypeComment(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT);
+        previewTypeComment(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT);
 
         int orderPrice = order.getCalculateTotalOrderAmount();
 
@@ -114,10 +114,10 @@ public class RestaurantController {
     }
 
     private void giftPreview() {
-        String form = previewTypeComment(GIFT_MENU);
+        previewTypeComment(GIFT_MENU);
         int price = order.getCalculateTotalOrderAmount();
 
-        if (EventPolicy.checkGiveawayEventConditions(price)) {
+        if (checkGiftEventConditions(price)) {
             List<VariousMenu> gifts = VariousMenu.getGifts();
             for (VariousMenu gift : gifts) {
                 int quantity = gift.getQuantity();
@@ -130,7 +130,7 @@ public class RestaurantController {
     }
 
     private void eventBenefitPreview() {
-        String form = previewTypeComment(BENEFIT_DETAILS);
+        previewTypeComment(BENEFIT_DETAILS);
         Map<String, Integer> benefitDiscounts = discount.getBenefitDiscounts();
         if (benefitDiscounts.isEmpty()) {
             printMessage(NONE.getMessage());
@@ -144,14 +144,14 @@ public class RestaurantController {
     }
 
     private void totalBenefitAmountPreview() {
-        String form = previewTypeComment(TOTAL_BENEFIT_AMOUNT);
+        previewTypeComment(TOTAL_BENEFIT_AMOUNT);
 
         int benefitAmount = discount.getTotalBenefitAmount();
         printMessage(TOTAL_BENEFIT_AMOUNT.getFormatMessage(-benefitAmount));
     }
 
     private void totalAmountAfterDiscountPreview() {
-        String form = previewTypeComment(TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT);
+        previewTypeComment(TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT);
 
         int payment = order.getCalculateTotalOrderAmount() - discount.getTotalBenefitAmount();
 
@@ -159,7 +159,7 @@ public class RestaurantController {
     }
 
     private void badgePreview() {
-        String form = previewTypeComment(EVENT_BADGE);
+        previewTypeComment(EVENT_BADGE);
 
         int benefitAmount = discount.getTotalBenefitAmount();
 
@@ -168,8 +168,7 @@ public class RestaurantController {
         printMessage(EVENT_BADGE.getFormatMessage(badge.getName()));
     }
 
-    private String previewTypeComment(PreviewType previewType) {
+    private void previewTypeComment(PreviewType previewType) {
         printPreviewType(previewType);
-        return previewType.getFormat();
     }
 }
