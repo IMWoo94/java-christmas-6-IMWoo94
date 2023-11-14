@@ -1,6 +1,12 @@
 package christmas.view;
 
+import static christmas.constants.message.PrintMessage.NONE;
+import static christmas.constants.message.PrintMessage.OPENING;
+import static christmas.constants.message.PrintMessage.REQUEST_ORDER;
+import static christmas.constants.message.PrintMessage.REQUEST_RESERVATION;
+
 import christmas.constants.biz.PreviewType;
+import christmas.constants.message.PrintMessage;
 import java.time.LocalDate;
 
 public class OutputView {
@@ -11,16 +17,24 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    public static void printNonBenefitPreview() {
+        System.out.println(NONE.getMessage());
+    }
+
     public static void printOpening() {
-        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
+        System.out.println(OPENING.getMessage());
     }
 
     public static void printRequestReservationDate() {
-        System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
+        System.out.println(REQUEST_RESERVATION.getMessage());
     }
 
     public static void printRequestOrders() {
-        System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+        System.out.println(REQUEST_ORDER.getMessage());
     }
 
     public static void printInputOrder(String order) {
@@ -28,7 +42,7 @@ public class OutputView {
     }
 
     public static void printPreviewCommnet(LocalDate date) {
-        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", date.getMonthValue(), date.getDayOfMonth());
+        System.out.println(PrintMessage.BENEFIT_PREVIEW.getFormatMessage(date.getMonthValue(), date.getDayOfMonth()));
     }
 
     public static void printPreviewType(PreviewType type) {
@@ -38,14 +52,6 @@ public class OutputView {
 
     public static void printBenefitPreview(String format, Object... args) {
         System.out.println(String.format(format, args));
-    }
-
-    public static void printNonBenefitPreview() {
-        System.out.println("없음");
-    }
-
-    public static void printMessage(String message) {
-        System.out.println(message);
     }
 
 }
